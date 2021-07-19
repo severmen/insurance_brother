@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Тестовая страница</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+        function add_request_for_a_call(id_insurance_companies){
+            let name = prompt('Представтесь');
+            let phone_number = prompt('Номер телефона');
+            let comment = prompt('Коментарий');
+             $.ajax({
+                   url: "/add_request_for_a_call/",
+                   type: 'POST',
+                   data: { "id":id_insurance_companies,
+                       "name":name,
+                       "phone_number":phone_number,
+                       "comment":comment,
+                   },
+                   success: function(data) {
+                        alert(data);
+
+                   }
+        });
+
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Message</h1>
+    <form action="#" method="get">
+        <p>Тип стразования</p>
+
+
+    </form>
+        {% for service in Services %}
+                <div style = "border:  dashed ; border-color: aqua;">
+                    <i>Компания</i> {{ service.insurance_companies.name }} <br>
+                    <i>Лого</i>   <img class="recipe_image" src="{{ service.insurance_companies.image.url }}" width="100px" height="100px">
+                    <br>
+                    <i>Экспертный рейтинг</i> {{ service.insurance_companies.expert_rating }}
+                    <br>
+                    <i>Клиентская база тышь. чел.</i> {{ service.insurance_companies.customer_base }}
+                    <br>
+                    <i>Процентная отказа</i> {{ service.insurance_companies.general_refusal }} %
+                    <br>
+                    <i>Возраст компании</i> {{ service.insurance_companies.get_date_year }}
+                    <br>
+                    <i>Тип сервиса</i> {{ service.type_services}}
+                    <br>
+                    <i>Описание услуги</i> {{ service.description}}
+                    <br>
+                    <i>Сумма страхования в рублях до</i> {{ service.insurance_cost}}
+                    <br>
+                    <i>Сумма выплат до</i> {{ service.amount_of_payments}}
+                    <br>
+                    <i>Сроки страхования </i> {{ service.terms_of_insurance}}
+                    <input type="button" onclick="add_request_for_a_call({{ service.id }})" value="Записаться">
+
+
+                </div>
+        {% endfor %}
+
+</body>
+</html>

@@ -7,6 +7,7 @@ class Request_for_a_call_Form(forms.Form):
         model = Request_for_a_call
         fields = ('name','phone_number','services', 'comment')
 
+
     @property
     def errors(self):
         """Return an ErrorDict for the data provided for the form."""
@@ -37,3 +38,18 @@ class Request_for_a_call_Form(forms.Form):
                                          comment = self.data.get('comment'))
         one_request.save()
         return 0
+
+class Search_Services(forms.Form):
+    def добавить_поле_все_для_выбора( список_выборов):
+        итоговой_результат = [("Все", "Все")]
+        for один_выбор in список_выборов:
+            итоговой_результат.append(один_выбор)
+        return итоговой_результат
+
+    type = forms.ChoiceField(label = "тип сервиса",
+                             choices = добавить_поле_все_для_выбора(list(map(lambda one_services: (one_services.name, one_services.name), Type_services.objects.all()))) )
+    rating = forms.ChoiceField(label = "экспертный рейтинг",
+                               choices=добавить_поле_все_для_выбора(Insurance_companies.RATING_CHOICES))
+    class Meta:
+        model = Services
+        fields = ('insurance_companies','description','insurance_cost', 'amount_of_payments',"terms_of_insurance",)

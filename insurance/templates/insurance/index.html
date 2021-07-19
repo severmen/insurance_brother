@@ -28,33 +28,33 @@
     </script>
 </head>
 
-<body>
-    <h1>Message</h1>
+<body>Компании</h1>
     <form action="#" method="get">
-        <p>Тип стразования</p>
-
+        {{ form.as_p }}
+        <input type="submit" value = "Отправить">
+    </form>
 
     </form>
         {% for service in Services %}
                 <div style = "border:  dashed ; border-color: aqua;">
                     <i>Компания</i> {{ service.insurance_companies.name }} <br>
-                    <i>Лого</i>   <img class="recipe_image" src="{{ service.insurance_companies.image.url }}" width="100px" height="100px">
+                      <img class="recipe_image" src="{{ service.insurance_companies.image.url }}" width="100px" height="100px">
                     <br>
                     <i>Экспертный рейтинг</i> {{ service.insurance_companies.expert_rating }}
                     <br>
-                    <i>Клиентская база тышь. чел.</i> {{ service.insurance_companies.customer_base }}
+                    <i>Клиентская база </i> {{ service.insurance_companies.customer_base }} тыщ. чел.
                     <br>
                     <i>Процентная отказа</i> {{ service.insurance_companies.general_refusal }} %
                     <br>
                     <i>Возраст компании</i> {{ service.insurance_companies.get_date_year }}
                     <br>
-                    <i>Тип сервиса</i> {{ service.type_services}}
+                    <i>Тип сервиса:</i> {{ service.type_services}}
                     <br>
-                    <i>Описание услуги</i> {{ service.description}}
+                    <i>Описание услуги:</i> {{ service.description}}
                     <br>
-                    <i>Сумма страхования в рублях до</i> {{ service.insurance_cost}}
+                    <i>Сумма страхования в рублях до:</i> {{ service.insurance_cost}} рублей
                     <br>
-                    <i>Сумма выплат до</i> {{ service.amount_of_payments}}
+                    <i>Сумма выплат до</i> {{ service.amount_of_payments}} рублей
                     <br>
                     <i>Сроки страхования </i> {{ service.terms_of_insurance}}
                     <input type="button" onclick="add_request_for_a_call({{ service.id }})" value="Записаться">

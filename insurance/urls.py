@@ -5,5 +5,6 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     path("", main.as_view(), name = "main_insurance"),
     re_path("add_request_for_a_call/", add_request_for_a_call),
+    re_path("register/", register.as_view())
 ]
 urlpatterns += staticfiles_urlpatterns()

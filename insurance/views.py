@@ -10,9 +10,9 @@ class main(ListView):
     context_object_name = 'Services'
 
     def get_queryset(self):
-        # original qs
-        Search_Services(data = self.request.GET)
-        qs = super().get_queryset()
+        filter = Search_Services(data=self.request.GET)
+        return filter.filter(super().get_queryset())
+
         return qs
         # filter by a variable captured from url, for example
         return qs.filter(name__startswith=self.kwargs['name'])
@@ -30,6 +30,10 @@ def add_request_for_a_call(request):
         return HttpResponse("Спасибо мы организатор свяжентся с вами в ближайшее свободное время")
     else:
         return HttpResponse("Ошибки в формате данных")
+class register(CreateView):
+    template_name = 'insurance/register.html'
+    form_class = RegisterForm
+    success_url = "/"
 
 
 

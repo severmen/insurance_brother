@@ -1,6 +1,25 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import *
+import copy
 from .models import *
 import re
+class RegisterForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ('username','first_name', 'last_name','password1','password2',)
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.is_staff = True
+            #добаляем в группу
+            user.save()
+            group = Group.objects.get(id=1)
+            group.user_set.add(user)
+        return user
+
 class Request_for_a_call_Form(forms.Form):
 
     class Meta:
@@ -50,6 +69,50 @@ class Search_Services(forms.Form):
                              choices = добавить_поле_все_для_выбора(list(map(lambda one_services: (one_services.name, one_services.name), Type_services.objects.all()))) )
     rating = forms.ChoiceField(label = "экспертный рейтинг",
                                choices=добавить_поле_все_для_выбора(Insurance_companies.RATING_CHOICES))
+    customer_base = forms.IntegerField(label = "Клиентская база не менее тыщь. чел", min_value = 1,
+                                       required=False)
+                                       #widget=forms.IntegerField(attrs={'placeholder': 'весь диапазон'})
+
+
+    price = forms.ChoiceField(label = "Сортировка по цене страхования",
+                                     choices = [("по возрастанию", "по возрастанию"), ("по убыванию", "по убыванию")])
+
     class Meta:
         model = Services
         fields = ('insurance_companies','description','insurance_cost', 'amount_of_payments',"terms_of_insurance",)
+
+    def filter(self, qs, ):
+        #тип
+        try:
+            if self.data.get('type') != 'Все':
+                qs = qs.filter(type_services = Type_services.objects.get(name = self.data.get('type')))
+        except Exception:
+            pass
+        #экспертный рейтинг
+        try:
+            if self.data.get('rating') != 'Все' and self.data.get('rating') != None:
+                all_companies = Insurance_companies.objects.filter(expert_rating = self.data.get('rating'))
+                for id, one_filter_qs in enumerate(copy.copy(qs)):
+                    if id == 0:
+                        qs = qs.filter(id = -1)
+                    x = (True for x in all_companies if one_filter_qs.insurance_companies == x)
+                    if next(x,None) == True:
+                        qs = qs | Services.objects.filter(id = one_filter_qs.id)
+        except Exception as E:
+            pass
+        #клинеская база
+        if self.data.get('customer_base') != None and  self.data.get('customer_base') != "":
+            number = int(self.data.get('customer_base'))
+            sorted_base = list((x for x in copy.copy(qs) if x.insurance_companies.customer_base > number))
+            for id, one_good_qs in enumerate(sorted_base):
+                if id == 0:
+                    qs = qs.filter(id=-1)
+                qs = qs | Services.objects.filter(id = one_good_qs.id)
+            if len(sorted_base) == 0:
+                qs = qs.filter(id=-1)
+        #сортировка
+
+        if self.data.get('price') == "по возрастанию":
+            return qs.order_by("insurance_cost")
+        else:
+            return qs.order_by("-insurance_cost")

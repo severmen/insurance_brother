@@ -22,6 +22,7 @@ from project import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('insurance.urls')),
+    re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += staticfiles_urlpatterns()

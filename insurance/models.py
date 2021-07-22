@@ -1,9 +1,12 @@
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 
 # Create your models here.
+
+
 
 
 class Insurance_companies(models.Model):
@@ -63,14 +66,17 @@ class Insurance_companies(models.Model):
         result += str(age_mount%12)+" мес. "
         return result
 
-
+    @staticmethod
+    def get_user(self):
+        self.save()
 
 
 
 class Services(models.Model):
     insurance_companies = models.ForeignKey('Insurance_companies', on_delete=models.CASCADE)
     type_services = models.ForeignKey('Type_services', on_delete=models.CASCADE)
-    description = models.CharField(max_length=400, verbose_name="Краткое описание услуги")
+    name = models.CharField(max_length=400, verbose_name="Название услуги")
+    description = RichTextUploadingField(verbose_name="Краткое описание услуги", config_name="default")
     insurance_cost = models.IntegerField(verbose_name="Стоймость страхования от в рублях")
     amount_of_payments = models.IntegerField(verbose_name="Сумма выплат до")
     terms_of_insurance = models.CharField(max_length=200, verbose_name="Сроки страхования")

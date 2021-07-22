@@ -1,13 +1,19 @@
 from django import forms
+from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import *
 import copy
 from .models import *
 import re
+
+
+
+
 class RegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username','first_name', 'last_name','password1','password2',)
+
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -18,6 +24,8 @@ class RegisterForm(UserCreationForm):
             user.save()
             group = Group.objects.get(id=1)
             group.user_set.add(user)
+
+
         return user
 
 class Request_for_a_call_Form(forms.Form):

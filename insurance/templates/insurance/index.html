@@ -50,7 +50,9 @@
                     <br>
                     <i>Тип сервиса:</i> {{ service.type_services}}
                     <br>
-                    <i>Описание услуги:</i> {{ service.description}}
+                    <i>Название услуги:</i> {{ service.name|truncatewords_html:15|safe}}
+                    <br>
+                    <i>Краткое описание услуги:</i> {{ service.description|truncatewords_html:80|safe}}
                     <br>
                     <i>Сумма страхования в рублях до:</i> {{ service.insurance_cost}} рублей
                     <br>

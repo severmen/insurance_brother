@@ -33,7 +33,7 @@ def add_request_for_a_call(request):
 class register(CreateView):
     template_name = 'insurance/register.html'
     form_class = RegisterForm
-    success_url = "/"
+    success_url = "/admin"
 
 
 

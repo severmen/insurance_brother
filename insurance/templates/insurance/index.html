@@ -1,34 +1,11 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Тестовая страница</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script>
-        function add_request_for_a_call(id_insurance_companies){
-            let name = prompt('Представтесь');
-            let phone_number = prompt('Номер телефона');
-            let comment = prompt('Коментарий');
-             $.ajax({
-                   url: "/add_request_for_a_call/",
-                   type: 'POST',
-                   data: { "id":id_insurance_companies,
-                       "name":name,
-                       "phone_number":phone_number,
-                       "comment":comment,
-                   },
-                   success: function(data) {
-                        alert(data);
+{% extends 'insurance/base.html' %}
+{% block title %}
+Страховые компании
+{% endblock %}
 
-                   }
-        });
+{% block body %}
+    <h1>Компании</h1>
 
-        }
-    </script>
-</head>
-
-<body>Компании</h1>
     <form action="#" method="get">
         {{ form.as_p }}
         <input type="submit" value = "Отправить">
@@ -53,9 +30,9 @@
                     <i>Название услуги:</i> {{ service.name|truncatewords_html:15|safe}}
                     <br>
                     <i>Краткое описание услуги:</i> {{ service.description|truncatewords_html:80|safe}}
-                    <br>
+
                     <i>Сумма страхования в рублях до:</i> {{ service.insurance_cost}} рублей
-                    <br>
+
                     <i>Сумма выплат до</i> {{ service.amount_of_payments}} рублей
                     <br>
                     <i>Сроки страхования </i> {{ service.terms_of_insurance}}
@@ -64,6 +41,20 @@
 
                 </div>
         {% endfor %}
+    
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="{{ request.get_full_path}}&page={{ page_obj.previous_page_number }}">Предыдущая</a>
+                {% endif %}
 
-</body>
-</html>
+                <span class="current">
+                    Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="{{ request.get_full_path }}&page={{ page_obj.next_page_number }}">Следующая</a>
+                {% endif %}
+            </span>
+    </div>
+{% endblock %}

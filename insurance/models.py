@@ -87,7 +87,7 @@ class Services(models.Model):
         ordering = ['-description']
 
     def __str__(self):
-        return self.description
+        return self.name
 class Type_services(models.Model):
     name = models.CharField(max_length=200, verbose_name="Тип страхования")
 

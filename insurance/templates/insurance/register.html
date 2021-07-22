@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+{% extends 'insurance/base.html' %}
+{% block title %}
+    Страховые компании
+{% endblock %}
+
+{% block body %}
 <body>
     <h1 align="center"> Регистрация </h1>
     <form method="post"  action="#" >
@@ -14,5 +14,4 @@
         {% endfor %}
         <input type="submit" value="Заригистроваться">
     </form>
-</body>
-</html>
+{% endblock %}

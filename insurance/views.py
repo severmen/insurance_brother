@@ -8,7 +8,7 @@ class main(ListView):
     model = Services
     template_name = 'insurance/index.html'
     context_object_name = 'Services'
-
+    paginate_by = 2
     def get_queryset(self):
         filter = Search_Services(data=self.request.GET)
         return filter.filter(super().get_queryset())

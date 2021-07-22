@@ -6,8 +6,22 @@
     <title>{% block title %} {% endblock %}</title>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="{% static 'insurance/script/main.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'insurance/style/main.css' %}">
 </head>
 <body>
+    <header>
+            {% if request.user.is_authenticated %}
+            Пользоватаель    {{ request.user.first_name }}
+            <br>
+            <a href="{% url 'admin:index' %}">Перейти в админ панель </a>
+            <br>
+            <a href="{% url 'logout' %}">Выйти </a>
+        {% else %}
+             <a href="register">Зарегистроватся(руковидителям компаний)</a>
+            <br>
+            <a href="{% url 'admin:index' %}">Войти </a>
+        {% endif %}
+    </header>
     {% block body %}
 
     {% endblock %}

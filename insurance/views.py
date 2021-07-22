@@ -1,4 +1,5 @@
-from django.shortcuts import render, HttpResponse
+from django.contrib.auth import logout
+from django.shortcuts import render, HttpResponse, redirect
 from django.views.generic import ListView, CreateView
 from .models import *
 from .form import *
@@ -12,10 +13,6 @@ class main(ListView):
     def get_queryset(self):
         filter = Search_Services(data=self.request.GET)
         return filter.filter(super().get_queryset())
-
-        return qs
-        # filter by a variable captured from url, for example
-        return qs.filter(name__startswith=self.kwargs['name'])
 
 
     def get_context_data(self, **kwargs):
@@ -35,6 +32,8 @@ class register(CreateView):
     form_class = RegisterForm
     success_url = "/admin"
 
-
+def user_logout(request):
+    logout(request)
+    return redirect("/")
 
 

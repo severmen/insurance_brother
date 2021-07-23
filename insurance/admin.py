@@ -10,6 +10,7 @@ admin.site.register(Type_services)
 
 class Insurance_companiesAdmin(admin.ModelAdmin):
     fields = ('name', 'expert_rating','image','customer_base','general_refusal','date_of_creation', )
+    list_display = ('name','date_of_creation' )
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
@@ -21,30 +22,10 @@ class Insurance_companiesAdmin(admin.ModelAdmin):
         obj.autor = request.user
         obj.autor_id = request.user.id
         super(Insurance_companiesAdmin, self).save_model(request, obj, form, change)
-        '''
-        companies = Insurance_companies(
-            autor = request.user,
-            name = request.POST.get('name'),
-            expert_rating = request.POST.get('expert_rating'),
-            image = request.FILES.get('image'),
-            customer_base = request.POST.get('customer_base'),
-            general_refusal = request.POST.get('general_refusal'),
-            date_of_creation =  request.POST.get('date_of_creation'),
-        )
-        companies.save()
-        '''
 
-
-    '''
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        self.save()
-        if request.user.is_superuser:
-            return super().formfield_for_foreignkey(db_field, request, **kwargs)
-        if db_field.name == "Autor":
-            kwargs["queryset"] = Insurance_companies.objects.filter(autor=request.user)
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
-    '''
 class Request_for_a_callAdmin(admin.ModelAdmin):
+    ordering = ('-data_time',)
+    list_display = ('name', 'services', 'phone_number','comment','data_time' )
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
@@ -58,6 +39,7 @@ class Request_for_a_callAdmin(admin.ModelAdmin):
         return queryset_one_user_service
 
 class ServicesAdmin(admin.ModelAdmin):
+    list_display = ('name', 'type_services',)
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if request.user.is_superuser:
             return super().formfield_for_foreignkey(db_field, request, **kwargs)

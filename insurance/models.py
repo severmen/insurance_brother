@@ -74,7 +74,7 @@ class Insurance_companies(models.Model):
 
 class Services(models.Model):
     insurance_companies = models.ForeignKey('Insurance_companies', on_delete=models.CASCADE)
-    type_services = models.ForeignKey('Type_services', on_delete=models.CASCADE)
+    type_services = models.ForeignKey('Type_services', on_delete=models.CASCADE, verbose_name = "Тип сервиса")
     name = models.CharField(max_length=400, verbose_name="Название услуги")
     description = RichTextUploadingField(verbose_name="Краткое описание услуги", config_name="default")
     insurance_cost = models.IntegerField(verbose_name="Стоймость страхования от в рублях")
@@ -99,11 +99,11 @@ class Type_services(models.Model):
         return self.name
 
 class Request_for_a_call(models.Model):
-    name = models.CharField(max_length=400, verbose_name="имя кого, кто делал запрос")
+    name = models.CharField(max_length=400, verbose_name="Имя")
     phone_number = models.CharField(max_length=20, verbose_name="Номер телефона")
-    services = models.ForeignKey('Services', on_delete=models.CASCADE)
+    services = models.ForeignKey('Services', on_delete=models.CASCADE, verbose_name="Тип сервиса")
     comment = models.CharField(max_length=600, verbose_name="Коментарий к запросу")
-    data_time = models.DateTimeField(default=datetime.now, blank=True, verbose_name="Дата время")
+    data_time = models.DateTimeField(default=datetime.now, blank=True, verbose_name="Дата и время")
     class Meta:
         verbose_name_plural = 'заявки'
         verbose_name = 'заявка'

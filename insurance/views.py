@@ -4,6 +4,9 @@ from django.views.generic import ListView, CreateView
 from .models import *
 from .form import *
 from django.views.decorators.csrf import csrf_exempt
+from .templates_filter import *
+
+
 
 class main(ListView):
     model = Services

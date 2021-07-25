@@ -23,6 +23,9 @@ class Insurance_companies(models.Model):
         ('RD', 'RD'),
         ('D','D')
     )
+
+
+
     autor = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=150, verbose_name="Название компании")
     expert_rating = models.CharField(max_length=50, choices=RATING_CHOICES, verbose_name="Рейтинг эксперта")
@@ -74,7 +77,7 @@ class Insurance_companies(models.Model):
 
 class Services(models.Model):
     insurance_companies = models.ForeignKey('Insurance_companies', on_delete=models.CASCADE)
-    type_services = models.ForeignKey('Type_services', on_delete=models.CASCADE, verbose_name = "Тип сервиса")
+    type_services = models.ForeignKey('Type_services', on_delete=models.CASCADE)
     name = models.CharField(max_length=400, verbose_name="Название услуги")
     description = RichTextUploadingField(verbose_name="Краткое описание услуги", config_name="default")
     insurance_cost = models.IntegerField(verbose_name="Стоймость страхования от в рублях")
@@ -110,3 +113,5 @@ class Request_for_a_call(models.Model):
 
     def __str__(self):
         return self.comment
+
+

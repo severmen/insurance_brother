@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-()^efh(hhx@49g(^t^j#s1^&!xw1@c$^yx9$-o)tmu3em$mb&t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'insurance-brother.herokuapp.com']
 
 
 # Application definition
@@ -90,7 +90,7 @@ DATABASES = {
         'USER':configParser.get('config_DB', 'USER_DB'),
         'PASSWORD':configParser.get('config_DB', 'PASSWORD_DB'),
         'HOST':configParser.get('config_DB', 'HOST_DB'),
-        'PORT':5432
+        'PORT':configParser.get('config_DB', 'PORT'),
     }
 }
 

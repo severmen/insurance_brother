@@ -1,0 +1,1656 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.6.20
+-- Dumped by pg_dump version 13.3 (Debian 13.3-1.pgdg100+1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: btree_gin; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS btree_gin WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION btree_gin; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION btree_gin IS 'support for indexing common datatypes in GIN';
+
+
+--
+-- Name: btree_gist; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS btree_gist WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION btree_gist; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION btree_gist IS 'support for indexing common datatypes in GiST';
+
+
+--
+-- Name: citext; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION citext; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION citext IS 'data type for case-insensitive character strings';
+
+
+--
+-- Name: cube; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS cube WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION cube; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION cube IS 'data type for multidimensional cubes';
+
+
+--
+-- Name: dblink; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS dblink WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION dblink; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION dblink IS 'connect to other PostgreSQL databases from within a database';
+
+
+--
+-- Name: dict_int; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS dict_int WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION dict_int; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION dict_int IS 'text search dictionary template for integers';
+
+
+--
+-- Name: dict_xsyn; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS dict_xsyn WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION dict_xsyn; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION dict_xsyn IS 'text search dictionary template for extended synonym processing';
+
+
+--
+-- Name: earthdistance; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS earthdistance WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION earthdistance; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION earthdistance IS 'calculate great-circle distances on the surface of the Earth';
+
+
+--
+-- Name: fuzzystrmatch; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS fuzzystrmatch WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION fuzzystrmatch; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION fuzzystrmatch IS 'determine similarities and distance between strings';
+
+
+--
+-- Name: hstore; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS hstore WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION hstore; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs';
+
+
+--
+-- Name: intarray; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS intarray WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION intarray; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION intarray IS 'functions, operators, and index support for 1-D arrays of integers';
+
+
+--
+-- Name: ltree; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS ltree WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION ltree; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION ltree IS 'data type for hierarchical tree-like structures';
+
+
+--
+-- Name: pg_stat_statements; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pg_stat_statements; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION pg_stat_statements IS 'track execution statistics of all SQL statements executed';
+
+
+--
+-- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pg_trgm; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching based on trigrams';
+
+
+--
+-- Name: pgcrypto; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pgcrypto; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
+
+
+--
+-- Name: pgrowlocks; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pgrowlocks WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pgrowlocks; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION pgrowlocks IS 'show row-level locking information';
+
+
+--
+-- Name: pgstattuple; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS pgstattuple WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pgstattuple; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION pgstattuple IS 'show tuple-level statistics';
+
+
+--
+-- Name: tablefunc; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS tablefunc WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION tablefunc; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION tablefunc IS 'functions that manipulate whole tables, including crosstab';
+
+
+--
+-- Name: unaccent; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS unaccent WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION unaccent; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION unaccent IS 'text search dictionary that removes accents';
+
+
+--
+-- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
+
+
+--
+-- Name: xml2; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS xml2 WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION xml2; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION xml2 IS 'XPath querying and XSLT';
+
+
+SET default_tablespace = '';
+
+--
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.auth_group (
+    id integer NOT NULL,
+    name character varying(150) NOT NULL
+);
+
+
+ALTER TABLE public.auth_group OWNER TO admin;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.auth_group_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_id_seq OWNER TO admin;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.auth_group_id_seq OWNED BY public.auth_group.id;
+
+
+--
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.auth_group_permissions (
+    id bigint NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_group_permissions OWNER TO admin;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.auth_group_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_permissions_id_seq OWNER TO admin;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.auth_group_permissions_id_seq OWNED BY public.auth_group_permissions.id;
+
+
+--
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.auth_permission (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.auth_permission OWNER TO admin;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.auth_permission_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_permission_id_seq OWNER TO admin;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.auth_permission_id_seq OWNED BY public.auth_permission.id;
+
+
+--
+-- Name: auth_user; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.auth_user (
+    id integer NOT NULL,
+    password character varying(128) NOT NULL,
+    last_login timestamp with time zone,
+    is_superuser boolean NOT NULL,
+    username character varying(150) NOT NULL,
+    first_name character varying(150) NOT NULL,
+    last_name character varying(150) NOT NULL,
+    email character varying(254) NOT NULL,
+    is_staff boolean NOT NULL,
+    is_active boolean NOT NULL,
+    date_joined timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.auth_user OWNER TO admin;
+
+--
+-- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.auth_user_groups (
+    id bigint NOT NULL,
+    user_id integer NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_user_groups OWNER TO admin;
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.auth_user_groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_user_groups_id_seq OWNER TO admin;
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.auth_user_groups_id_seq OWNED BY public.auth_user_groups.id;
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.auth_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_user_id_seq OWNER TO admin;
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.auth_user_id_seq OWNED BY public.auth_user.id;
+
+
+--
+-- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.auth_user_user_permissions (
+    id bigint NOT NULL,
+    user_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_user_user_permissions OWNER TO admin;
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.auth_user_user_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_user_user_permissions_id_seq OWNER TO admin;
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.auth_user_user_permissions_id_seq OWNED BY public.auth_user_user_permissions.id;
+
+
+--
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id integer NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+ALTER TABLE public.django_admin_log OWNER TO admin;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.django_admin_log_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_admin_log_id_seq OWNER TO admin;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.django_admin_log_id_seq OWNED BY public.django_admin_log.id;
+
+
+--
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.django_content_type (
+    id integer NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.django_content_type OWNER TO admin;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.django_content_type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_content_type_id_seq OWNER TO admin;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.django_content_type_id_seq OWNED BY public.django_content_type.id;
+
+
+--
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.django_migrations (
+    id bigint NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_migrations OWNER TO admin;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.django_migrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_migrations_id_seq OWNER TO admin;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.django_migrations_id_seq OWNED BY public.django_migrations.id;
+
+
+--
+-- Name: django_session; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_session OWNER TO admin;
+
+--
+-- Name: insurance_insurance_companies; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.insurance_insurance_companies (
+    id bigint NOT NULL,
+    name character varying(150) NOT NULL,
+    image character varying(100) NOT NULL,
+    customer_base integer NOT NULL,
+    general_refusal numeric(5,2) NOT NULL,
+    date_of_creation date NOT NULL,
+    autor_id integer NOT NULL,
+    expert_rating character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.insurance_insurance_companies OWNER TO admin;
+
+--
+-- Name: insurance_insurance_companies_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.insurance_insurance_companies_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.insurance_insurance_companies_id_seq OWNER TO admin;
+
+--
+-- Name: insurance_insurance_companies_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.insurance_insurance_companies_id_seq OWNED BY public.insurance_insurance_companies.id;
+
+
+--
+-- Name: insurance_request_for_a_call; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.insurance_request_for_a_call (
+    id bigint NOT NULL,
+    name character varying(400) NOT NULL,
+    phone_number character varying(20) NOT NULL,
+    comment character varying(600) NOT NULL,
+    services_id bigint NOT NULL,
+    data_time timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.insurance_request_for_a_call OWNER TO admin;
+
+--
+-- Name: insurance_request_for_a_call_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.insurance_request_for_a_call_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.insurance_request_for_a_call_id_seq OWNER TO admin;
+
+--
+-- Name: insurance_request_for_a_call_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.insurance_request_for_a_call_id_seq OWNED BY public.insurance_request_for_a_call.id;
+
+
+--
+-- Name: insurance_services; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.insurance_services (
+    id bigint NOT NULL,
+    description text NOT NULL,
+    insurance_cost integer NOT NULL,
+    amount_of_payments integer NOT NULL,
+    terms_of_insurance character varying(200) NOT NULL,
+    insurance_companies_id bigint NOT NULL,
+    type_services_id bigint NOT NULL,
+    name character varying(400) NOT NULL
+);
+
+
+ALTER TABLE public.insurance_services OWNER TO admin;
+
+--
+-- Name: insurance_services_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.insurance_services_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.insurance_services_id_seq OWNER TO admin;
+
+--
+-- Name: insurance_services_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.insurance_services_id_seq OWNED BY public.insurance_services.id;
+
+
+--
+-- Name: insurance_type_services; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.insurance_type_services (
+    id bigint NOT NULL,
+    name character varying(200) NOT NULL
+);
+
+
+ALTER TABLE public.insurance_type_services OWNER TO admin;
+
+--
+-- Name: insurance_type_services_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.insurance_type_services_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.insurance_type_services_id_seq OWNER TO admin;
+
+--
+-- Name: insurance_type_services_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.insurance_type_services_id_seq OWNED BY public.insurance_type_services.id;
+
+
+--
+-- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group ALTER COLUMN id SET DEFAULT nextval('public.auth_group_id_seq'::regclass);
+
+
+--
+-- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_permission ALTER COLUMN id SET DEFAULT nextval('public.auth_permission_id_seq'::regclass);
+
+
+--
+-- Name: auth_user id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user ALTER COLUMN id SET DEFAULT nextval('public.auth_user_id_seq'::regclass);
+
+
+--
+-- Name: auth_user_groups id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user_groups ALTER COLUMN id SET DEFAULT nextval('public.auth_user_groups_id_seq'::regclass);
+
+
+--
+-- Name: auth_user_user_permissions id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_user_user_permissions_id_seq'::regclass);
+
+
+--
+-- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_admin_log ALTER COLUMN id SET DEFAULT nextval('public.django_admin_log_id_seq'::regclass);
+
+
+--
+-- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_content_type ALTER COLUMN id SET DEFAULT nextval('public.django_content_type_id_seq'::regclass);
+
+
+--
+-- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('public.django_migrations_id_seq'::regclass);
+
+
+--
+-- Name: insurance_insurance_companies id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.insurance_insurance_companies ALTER COLUMN id SET DEFAULT nextval('public.insurance_insurance_companies_id_seq'::regclass);
+
+
+--
+-- Name: insurance_request_for_a_call id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.insurance_request_for_a_call ALTER COLUMN id SET DEFAULT nextval('public.insurance_request_for_a_call_id_seq'::regclass);
+
+
+--
+-- Name: insurance_services id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.insurance_services ALTER COLUMN id SET DEFAULT nextval('public.insurance_services_id_seq'::regclass);
+
+
+--
+-- Name: insurance_type_services id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.insurance_type_services ALTER COLUMN id SET DEFAULT nextval('public.insurance_type_services_id_seq'::regclass);
+
+
+--
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.auth_group (id, name) FROM stdin;
+1	Руководители страховых компаний
+\.
+
+
+--
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
+5	1	39
+6	1	40
+7	1	25
+8	1	26
+9	1	27
+10	1	28
+12	1	33
+13	1	35
+14	1	36
+15	1	34
+\.
+
+
+--
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add log entry	1	add_logentry
+2	Can change log entry	1	change_logentry
+3	Can delete log entry	1	delete_logentry
+4	Can view log entry	1	view_logentry
+5	Can add permission	2	add_permission
+6	Can change permission	2	change_permission
+7	Can delete permission	2	delete_permission
+8	Can view permission	2	view_permission
+9	Can add group	3	add_group
+10	Can change group	3	change_group
+11	Can delete group	3	delete_group
+12	Can view group	3	view_group
+13	Can add user	4	add_user
+14	Can change user	4	change_user
+15	Can delete user	4	delete_user
+16	Can view user	4	view_user
+17	Can add content type	5	add_contenttype
+18	Can change content type	5	change_contenttype
+19	Can delete content type	5	delete_contenttype
+20	Can view content type	5	view_contenttype
+21	Can add session	6	add_session
+22	Can change session	6	change_session
+23	Can delete session	6	delete_session
+24	Can view session	6	view_session
+25	Can add компания	7	add_insurance_companies
+26	Can change компания	7	change_insurance_companies
+27	Can delete компания	7	delete_insurance_companies
+28	Can view компания	7	view_insurance_companies
+29	Can add тип услуги	8	add_type_services
+30	Can change тип услуги	8	change_type_services
+31	Can delete тип услуги	8	delete_type_services
+32	Can view тип услуги	8	view_type_services
+33	Can add услуга	9	add_services
+34	Can change услуга	9	change_services
+35	Can delete услуга	9	delete_services
+36	Can view услуга	9	view_services
+37	Can add request_for_a_call	10	add_request_for_a_call
+38	Can change request_for_a_call	10	change_request_for_a_call
+39	Can delete request_for_a_call	10	delete_request_for_a_call
+40	Can view request_for_a_call	10	view_request_for_a_call
+\.
+
+
+--
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
+11	pbkdf2_sha256$260000$XgiQSnDnVDs9C1ZeHcLQjm$8dZduHkk1yVi117Q7DQjTyncdDs8H6yJ66zoDcNQjYs=	2021-07-22 10:13:13.717662+04	f	alliance	Филлип	Гронемайер		t	t	2021-07-21 14:33:54.266831+04
+8	pbkdf2_sha256$260000$HVRqqgud2da9l5mOJZW21C$WkNTjd1Eg8Qgs9yVpeq4e2mAzF1n4bWoQMcS+FHr+nQ=	2021-07-22 10:30:34.113212+04	f	Alfastrakhovanie	Альфа	Альфов		t	t	2021-07-20 20:05:02.506091+04
+7	pbkdf2_sha256$260000$WnHOMaZ9MCgF7BlvWT9UKq$re5QRDEewI8cktbR8znDeoHeynT75qUlehk1Wigqfxs=	2021-07-23 16:27:02.799955+04	f	rosgosstrakh	Геннадий	Гальперин		t	t	2021-07-20 16:22:10.079916+04
+1	pbkdf2_sha256$260000$idBzBdsNlkdEAiiNJXvF3e$Lzc/CDxqE7A8hzcIktTdOiwJXo67lyeV/GTfffLxnyU=	2021-07-23 20:46:08+04	t	admin				t	t	2021-07-12 20:13:59+04
+\.
+
+
+--
+-- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
+4	7	1
+5	8	1
+8	11	1
+\.
+
+
+--
+-- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+1	2021-07-13 21:07:36.897084+04	1	Руководители страховых компаний	1	[{"added": {}}]	3	1
+2	2021-07-13 21:08:35.93883+04	2	admin2	1	[{"added": {}}]	4	1
+3	2021-07-13 21:15:53.060334+04	2	admin2	2	[{"changed": {"fields": ["Groups"]}}]	4	1
+4	2021-07-13 21:16:37.375728+04	1	Руководители страховых компаний	2	[{"changed": {"fields": ["Permissions"]}}]	3	1
+5	2021-07-13 23:01:03.085145+04	3	admin3	1	[{"added": {}}]	4	1
+6	2021-07-13 23:20:35.901566+04	3	admin3	2	[{"changed": {"fields": ["Groups"]}}]	4	1
+7	2021-07-13 23:22:04.81557+04	1	Руководители страховых компаний	2	[{"changed": {"fields": ["Permissions"]}}]	3	1
+10	2021-07-14 20:59:55.457888+04	1	Type_services object (1)	1	[{"added": {}}]	9	1
+11	2021-07-14 21:00:58.060017+04	2	страхование дома	1	[{"added": {}}]	9	1
+12	2021-07-14 21:01:20.937012+04	3	каско	1	[{"added": {}}]	9	1
+13	2021-07-14 21:01:55.808017+04	4	страхование жизни	1	[{"added": {}}]	9	1
+16	2021-07-17 10:59:43.196251+04	2	Страховая компания 3 админа	2	[{"changed": {"fields": ["\\u041b\\u043e\\u0433\\u043e\\u0442\\u0438\\u043f \\u043a\\u043e\\u043c\\u043f\\u0430\\u043d\\u0438\\u0438"]}}]	7	1
+17	2021-07-17 11:00:07.664738+04	1	Компания второго админа	2	[{"changed": {"fields": ["\\u041b\\u043e\\u0433\\u043e\\u0442\\u0438\\u043f \\u043a\\u043e\\u043c\\u043f\\u0430\\u043d\\u0438\\u0438"]}}]	7	1
+19	2021-07-18 21:43:26.741954+04	1	застрахуем ваше авто компания второго админа	2	[{"changed": {"fields": ["\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	10	1
+20	2021-07-18 21:44:03.872481+04	2	Застрахуем ваше автом по полной программе компания второго админа	2	[{"changed": {"fields": ["\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	10	1
+21	2021-07-18 21:45:21.553272+04	3	Не бойся ушибитьс компания 3 админа	2	[{"changed": {"fields": ["\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	10	1
+22	2021-07-18 21:47:09.402251+04	1	не отпределил	2	[{"changed": {"fields": ["Services"]}}]	8	1
+23	2021-07-18 22:53:59.876837+04	1	Руководители страховых компаний	2	[{"changed": {"fields": ["Permissions"]}}]	3	1
+24	2021-07-18 22:55:13.411759+04	1	Руководители страховых компаний	2	[{"changed": {"fields": ["Permissions"]}}]	3	1
+31	2021-07-18 23:45:18.114242+04	2	Страховая компания 3 админа	2	[{"changed": {"fields": ["\\u0414\\u0430\\u0442\\u0430 \\u0441\\u043e\\u0437\\u0434\\u0430\\u043d\\u0438\\u044f \\u043a\\u043e\\u043c\\u043f\\u0430\\u043d\\u0438\\u0438"]}}]	7	1
+32	2021-07-18 23:45:38.72594+04	1	Компания второго админа	2	[{"changed": {"fields": ["\\u0414\\u0430\\u0442\\u0430 \\u0441\\u043e\\u0437\\u0434\\u0430\\u043d\\u0438\\u044f \\u043a\\u043e\\u043c\\u043f\\u0430\\u043d\\u0438\\u0438"]}}]	7	1
+33	2021-07-20 18:25:33.657613+04	None	h`	1	[{"added": {}}]	7	7
+34	2021-07-20 18:39:45.744411+04	7	123	1	[{"added": {}}]	7	7
+35	2021-07-20 18:42:41.174044+04	7	123	3		7	7
+36	2021-07-20 18:45:53.685249+04	8	Розгострах	1	[{"added": {}}]	7	7
+37	2021-07-20 18:49:43.564415+04	8	Более 250 пунктов урегулирования убытков по ОСАГО на территории России готовы оказать поддержку при страховом случае.	1	[{"added": {}}]	9	7
+38	2021-07-20 18:50:14.206699+04	8	Розгострах	2	[{"changed": {"fields": ["\\u0414\\u0430\\u0442\\u0430 \\u0441\\u043e\\u0437\\u0434\\u0430\\u043d\\u0438\\u044f \\u043a\\u043e\\u043c\\u043f\\u0430\\u043d\\u0438\\u0438"]}}]	7	7
+39	2021-07-20 18:51:58.287407+04	9	«Каско Профессионал» — отличная альтернатива обычному полису КАСКО.	1	[{"added": {}}]	9	7
+40	2021-07-20 18:53:20.665094+04	10	Для страхования квартиры от залива, пожара или кражи не нужно идти в офис, приглашать экспертов для осмотра и платить за те риски, которые вам не нужны.	1	[{"added": {}}]	9	7
+41	2021-07-20 20:16:54.838982+04	9	Альфа страхование	1	[{"added": {}}]	7	8
+42	2021-07-20 20:18:04.371559+04	11	Ситуация на дороге никогда не бывает предсказуемой. Даже если вы давно водите автомобиль и прекрасно справляетесь с его управлением, вы не можете быть уверены в своей безопасности, ведь причиной ДТП м	1	[{"added": {}}]	9	8
+43	2021-07-20 20:18:34.580425+04	12	Полис КАСКО позволит вам отремонтировать машину или получить компенсацию в случае ее гибели. Страхование автомобиля осуществляется по рискам «Хищение» и «Повреждение».	1	[{"added": {}}]	9	8
+44	2021-07-20 21:28:42.567455+04	13	Страхование жизни и здоровья — один из первых и основных видов страхования, который и по сей день остается популярным. Разнообразные программы помогут получить компенсацию, если застрахованный человек	1	[{"added": {}}]	9	8
+45	2021-07-21 14:37:46.902056+04	10	альянс	1	[{"added": {}}]	7	11
+46	2021-07-21 14:39:45.750057+04	14	Страхование квартиры Allianz Happy Home Комплексная защита вашего жилья, домашнего имущества и гражданской ответственности перед соседями	1	[{"added": {}}]	9	11
+47	2021-07-21 14:40:18.68948+04	15	Страхование загородного дома Allianz Happy Home Комплексная защита вашего жилья, домашнего имущества и гражданской ответственности перед третьими лицами	1	[{"added": {}}]	9	11
+48	2021-07-21 14:47:10.977184+04	1	Руководители страховых компаний	2	[{"changed": {"fields": ["Permissions"]}}]	3	1
+49	2021-07-22 10:13:35.359545+04	14	<p>Страхование квартиры комплексная защита вашего жилья, домашнего имущества и гражданской ответственности перед соседями</p>	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	11
+50	2021-07-22 10:17:51.752879+04	15	<p>Страхование загородного дома&nbsp; Комплексная защита вашего жилья, домашнего имущества и гражданской ответственности перед третьими лицами</p>	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	11
+51	2021-07-22 10:23:12.538213+04	16	<h3>Почему стоит выбрать&nbsp;<strong>Allianz Защита+</strong>?</h3>\r\n\r\n<ul>\r\n\t<li>лечение в ведущих клиниках в Израиле, Испании, Южной Корее и России с возможностью выбора</li>\r\n</ul>\r\n\r\n<ul>\r\n\t<li>в	1	[{"added": {}}]	9	11
+52	2021-07-22 10:24:31.947772+04	16	Cтрахование от критических заболеваний	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	11
+53	2021-07-22 10:26:45.248516+04	16	Cтрахование от критических заболеваний	2	[]	9	11
+54	2021-07-22 10:28:38.048248+04	8	Помощь на дороге	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	7
+55	2021-07-22 10:29:35.460971+04	9	Каско Профессионал	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	7
+56	2021-07-22 10:29:54.420996+04	9	Каско Профессионал	2	[{"changed": {"fields": ["\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	7
+57	2021-07-22 10:30:20.581803+04	10	Ваше жилье	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	7
+58	2021-07-22 10:34:06.570903+04	13	Страхование от несчастного случия	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u0421\\u0440\\u043e\\u043a\\u0438 \\u0441\\u0442\\u0440\\u0430\\u0445\\u043e\\u0432\\u0430\\u043d\\u0438\\u044f"]}}]	9	8
+59	2021-07-22 10:36:36.00822+04	12	КАСКО	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	8
+60	2021-07-22 10:36:45.583528+04	11	ОСАГО	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	8
+61	2021-07-23 17:37:20.676442+04	8	Розгострах	2	[]	7	7
+62	2021-07-23 18:32:13.515698+04	10	уца	3		10	7
+63	2021-07-23 20:57:26.516449+04	1	admin	2	[]	4	1
+\.
+
+
+--
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.django_content_type (id, app_label, model) FROM stdin;
+1	admin	logentry
+2	auth	permission
+3	auth	group
+4	auth	user
+5	contenttypes	contenttype
+6	sessions	session
+7	insurance	insurance_companies
+8	insurance	type_services
+9	insurance	services
+10	insurance	request_for_a_call
+\.
+
+
+--
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.django_migrations (id, app, name, applied) FROM stdin;
+1	contenttypes	0001_initial	2021-07-18 22:46:50.486711+04
+2	auth	0001_initial	2021-07-18 22:46:50.663713+04
+3	admin	0001_initial	2021-07-18 22:46:50.715711+04
+4	admin	0002_logentry_remove_auto_add	2021-07-18 22:46:50.730709+04
+5	admin	0003_logentry_add_action_flag_choices	2021-07-18 22:46:50.745711+04
+6	contenttypes	0002_remove_content_type_name	2021-07-18 22:46:50.782729+04
+7	auth	0002_alter_permission_name_max_length	2021-07-18 22:46:50.804712+04
+8	auth	0003_alter_user_email_max_length	2021-07-18 22:46:50.824712+04
+9	auth	0004_alter_user_username_opts	2021-07-18 22:46:50.842714+04
+10	auth	0005_alter_user_last_login_null	2021-07-18 22:46:50.859708+04
+11	auth	0006_require_contenttypes_0002	2021-07-18 22:46:50.863713+04
+12	auth	0007_alter_validators_add_error_messages	2021-07-18 22:46:50.87571+04
+13	auth	0008_alter_user_username_max_length	2021-07-18 22:46:50.903712+04
+14	auth	0009_alter_user_last_name_max_length	2021-07-18 22:46:50.92072+04
+15	auth	0010_alter_group_name_max_length	2021-07-18 22:46:50.935712+04
+16	auth	0011_update_proxy_permissions	2021-07-18 22:46:50.95771+04
+17	auth	0012_alter_user_first_name_max_length	2021-07-18 22:46:50.974716+04
+18	insurance	0001_initial	2021-07-18 22:46:51.11671+04
+19	sessions	0001_initial	2021-07-18 22:46:51.138712+04
+20	insurance	0002_auto_20210718_2343	2021-07-18 23:43:49.411844+04
+21	insurance	0003_services_name	2021-07-21 14:44:06.093264+04
+22	insurance	0004_alter_services_description	2021-07-21 14:49:20.479198+04
+23	insurance	0005_alter_services_description	2021-07-21 15:00:47.70692+04
+24	insurance	0006_auto_20210724_0929	2021-07-24 09:51:26.268343+04
+25	insurance	0007_auto_20210724_0951	2021-07-24 09:51:26.379339+04
+26	insurance	0008_insurance_companies_medaltype	2021-07-24 10:22:04.888431+04
+27	insurance	0009_auto_20210724_1027	2021-07-24 10:27:27.830872+04
+28	insurance	0010_alter_insurance_companies_expert_rating	2021-07-24 11:13:22.50914+04
+\.
+
+
+--
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
+mufnxgj38z4v6wrs3yhzv03t6imu2r68	.eJxVjDsOwjAQBe_iGlms_6akzxks73rBAeRIcVIh7o4spYD2zcx7i5T3raa985rmIi4CxOl3w0xPbgOUR273RdLStnVGORR50C6npfDrerh_BzX3OmoKgBHzzZytQ0ZF3jFrAKUZMBhdFBlNxvgASin0ztoQAWyJNvhI4vMF5f03FQ:1m3Lpm:Jwus8DcJFZx7VeMZJUVVJZOQ-iBdaTKrcrNWN9WYbjA	2021-07-27 21:04:38.548234+04
+ntcpbdgr2afqajx1zx8beahpqdijfg5t	.eJxVjEEOwiAQRe_C2hBngAIu3fcMhBlGqRqalHZlvLtp0oVu_3vvv1XK21rT1mVJU1EXher0u1Hmp7QdlEdu91nz3NZlIr0r-qBdj3OR1_Vw_w5q7nWvOQBFyjd7dgMJIftBxACgEaBgTUG2hq31ARCR_OBciACuRBd8ZPX5AuaWNxY:1m3Lzg:4ue33l72pEVqQb7L-5FHo8HNs044-SjMpmsBawHSZC8	2021-07-27 21:14:52.521734+04
+i055ads0dnf6f66bkn09uwz32dnpw1dt	.eJxVjDsOwjAQBe_iGlms_6akzxks73rBAeRIcVIh7o4spYD2zcx7i5T3raa985rmIi5Ci9Pvhpme3AYoj9zui6SlbeuMcijyoF1OS-HX9XD_DmruddQUACPmmzlbh4yKvGPWAEozYDC6KDKajPEBlFLonbUhAtgSbfCRxOcL5y83Fw:1m3NrA:pMVOJMrqeKmf6RDFAzrOuBsZqaiibwlQq8m2U8-mHZM	2021-07-27 23:14:12.638678+04
+4j8dqtcqijan2d8g0burfjk15h1qzvms	.eJxVjDsOwjAQBe_iGlms_6akzxks73rBAeRIcVIh7o4spYD2zcx7i5T3raa985rmIi4CxOl3w0xPbgOUR273RdLStnVGORR50C6npfDrerh_BzX3OmoKgBHzzZytQ0ZF3jFrAKUZMBhdFBlNxvgASin0ztoQAWyJNvhI4vMF5f03FQ:1m3hO7:Z_QE0Obquwj1GT7H57CYv12XTMCd3WKvDVAZTiPLag4	2021-07-28 20:05:31.701616+04
+m0jobq3dw6ks4v0rx07w2t3m6jxkx7j5	.eJxVjEEOwiAQRe_C2hCgMIBL9z0DYWZQqoYmpV0Z765NutDtf-_9l0h5W2vaelnSxOIsvDj9bpjpUdoO-J7bbZY0t3WZUO6KPGiX48zleTncv4Oae_3WFryzoFRBwqwi6xICDBqj9zEYVH5gpBCN9YZNVOAArwysiTQEsk68P8ZONyY:1m6atX:7087kE0J20wU9Q3GVE5FEOtm9fEWPuXanAu49Fc00UE	2021-08-05 19:45:55.740269+04
+qd9x4kruved5be72ivsyd9nvn8kf50qx	.eJxVjDsOwjAQBe_iGlms_6akzxks73rBAeRIcVIh7o4spYD2zcx7i5T3raa985rmIi4CxOl3w0xPbgOUR273RdLStnVGORR50C6npfDrerh_BzX3OmoKgBHzzZytQ0ZF3jFrAKUZMBhdFBlNxvgASin0ztoQAWyJNvhI4vMF5f03FQ:1m6yJM:VZa-zvmbgmnv6nUcfy70KYUqTCW5trL9CVGc8MTKBtM	2021-08-06 20:46:08.374358+04
+\.
+
+
+--
+-- Data for Name: insurance_insurance_companies; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.insurance_insurance_companies (id, name, image, customer_base, general_refusal, date_of_creation, autor_id, expert_rating) FROM stdin;
+9	Альфа страхование	Альфа.jpeg	20000	3.00	2001-07-10	8	2021-07-24 05:51:26.299341+00:00
+10	альянс	Альянс.png	6000	3.00	1991-07-07	11	2021-07-24 05:51:26.299341+00:00
+8	Розгострах	Росгострах.jpeg	40000	2.00	1931-10-15	7	2021-07-24 05:51:26.299341+00:00
+\.
+
+
+--
+-- Data for Name: insurance_request_for_a_call; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.insurance_request_for_a_call (id, name, phone_number, comment, services_id, data_time) FROM stdin;
+9	Иван	12345	привет	9	2021-07-23 03:19:49.511554+04
+\.
+
+
+--
+-- Data for Name: insurance_services; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.insurance_services (id, description, insurance_cost, amount_of_payments, terms_of_insurance, insurance_companies_id, type_services_id, name) FROM stdin;
+14	<p>Страхование квартиры комплексная защита вашего жилья, домашнего имущества и гражданской ответственности перед соседями</p>	12000	1000000	от 1 года до 5 лет	10	2	Allianz Happy Home
+15	<p>Страхование загородного дома&nbsp; Комплексная защита вашего жилья, домашнего имущества и гражданской ответственности перед третьими лицами</p>	20000	5000000	от 1 года до 2 лет	10	2	Allianz Happy Home
+8	<p>Программа страхования&nbsp;<a href="https://www.rgs.ru/products/private_person/auto/kasko/onlinekasko/pnd/index.wbp">&laquo;Помощь на дороге&raquo;</a>&nbsp;необходима каждому водителю, даже если у него уже есть полис ОСАГО или КАСКО. В случае ДТП или поломки на дороге мы окажем вам оперативную техническую помощь, поможем оформить страховой случай и собрать справки, организуем консультации врачей и автоюристов. Достаточно будет сделать один звонок, и большую часть забот мы возьмем на себя.</p>	2000	5000000	Уточняйте	8	1	Помощь на дороге
+16	<h3>Почему стоит выбрать&nbsp;<strong>Allianz Защита+</strong>?</h3>\r\n\r\n<ul>\r\n\t<li>лечение в ведущих клиниках в Израиле, Испании, Южной Корее и России с возможностью выбора</li>\r\n</ul>\r\n\r\n<ul>\r\n\t<li>вариативность рисков: онкология, кардиохирургия, нейрохирургия, трансплантация органов</li>\r\n</ul>\r\n\r\n<ul>\r\n\t<li>широкий диапазон страховых сумм: до 60 млн. в год или до 600 млн руб. в течение всей жизни</li>\r\n</ul>\r\n\r\n<ul>\r\n\t<li>оплата расходов на лечение, проезд и проживание для застрахованного и сопровождающих</li>\r\n</ul>	6000	5000000	до 5 лет	10	4	Cтрахование от критических заболеваний
+13	<p>У&nbsp;каждого человека могут происходить события, подвергающие опасности его жизнь и&nbsp;здоровье.</p>\r\n\r\n<p>Воспользуйтесь программой личного страхования, чтобы обеспечить финансовую защиту в&nbsp;условиях непредвиденных обстоятельств.</p>	800	50000	от 2 месяцев до 3 лет	9	4	Страхование от несчастного случия
+9	<p>Отличная альтернатива обычному полису КАСКО. Он стоит дешевле и не требует осмотра автомобиля, а включает в себя не только ремонт или выплаты в случае ДТП или падения предметов, но и техническую помощь на дороге. В полис также входят консультации юристов, медиков и автоэкспертов. Просто оформите полис онлайн по фиксированной цене и позвоните нам при страховом случае &mdash; остальное мы возьмем на себя.</p>	5000	2000000	Уточняйте	8	3	Каско Профессионал
+10	<p>Новая удобная программа страхования для владельцев домов и дач. В полис уже включен оптимальный набор рисков: повреждение отделки, инженерного оборудования и движимого имущества, гражданская ответственность владельца, а также юридические расходы. Полис можно оформить онлайн по фиксированной цене, без осмотра строения и описи имущества.</p>	10000	2000000	от 1 года	8	2	Ваше жилье
+12	<p>Полис КАСКО позволит вам отремонтировать машину или получить компенсацию в случае ее гибели. Страхование автомобиля осуществляется по рискам &laquo;Хищение&raquo; и &laquo;Повреждение&raquo;.</p>	15000	5000000	от 1 года	9	3	КАСКО
+11	<p>Ситуация на дороге никогда не бывает предсказуемой. Даже если вы давно водите автомобиль и прекрасно справляетесь с его управлением, вы не можете быть уверены в своей безопасности, ведь причиной ДТП могут стать другие участники дорожного движения и пешеходы, плохие погодные условия, некачественное дорожное покрытие и множество других факторов.</p>	1500	300000	от 6 месяцев до 2 лет	9	1	ОСАГО
+\.
+
+
+--
+-- Data for Name: insurance_type_services; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.insurance_type_services (id, name) FROM stdin;
+1	осаго
+2	страхование дома
+3	каско
+4	страхование жизни
+\.
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.auth_group_id_seq', 1, true);
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 15, true);
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 40, true);
+
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 8, true);
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.auth_user_id_seq', 11, true);
+
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 63, true);
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 10, true);
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 28, true);
+
+
+--
+-- Name: insurance_insurance_companies_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.insurance_insurance_companies_id_seq', 10, true);
+
+
+--
+-- Name: insurance_request_for_a_call_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.insurance_request_for_a_call_id_seq', 10, true);
+
+
+--
+-- Name: insurance_services_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.insurance_services_id_seq', 16, true);
+
+
+--
+-- Name: insurance_type_services_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.insurance_type_services_id_seq', 4, true);
+
+
+--
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
+
+
+--
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups auth_user_groups_user_id_group_id_94350c0c_uniq; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_group_id_94350c0c_uniq UNIQUE (user_id, group_id);
+
+
+--
+-- Name: auth_user auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user
+    ADD CONSTRAINT auth_user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_permission_id_14a6b632_uniq; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_permission_id_14a6b632_uniq UNIQUE (user_id, permission_id);
+
+
+--
+-- Name: auth_user auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user
+    ADD CONSTRAINT auth_user_username_key UNIQUE (username);
+
+
+--
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
+
+
+--
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- Name: insurance_insurance_companies insurance_insurance_companies_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.insurance_insurance_companies
+    ADD CONSTRAINT insurance_insurance_companies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: insurance_request_for_a_call insurance_request_for_a_call_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.insurance_request_for_a_call
+    ADD CONSTRAINT insurance_request_for_a_call_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: insurance_services insurance_services_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.insurance_services
+    ADD CONSTRAINT insurance_services_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: insurance_type_services insurance_type_services_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.insurance_type_services
+    ADD CONSTRAINT insurance_type_services_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
+
+
+--
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
+
+
+--
+-- Name: auth_user_groups_group_id_97559544; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX auth_user_groups_group_id_97559544 ON public.auth_user_groups USING btree (group_id);
+
+
+--
+-- Name: auth_user_groups_user_id_6a12ed8b; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX auth_user_groups_user_id_6a12ed8b ON public.auth_user_groups USING btree (user_id);
+
+
+--
+-- Name: auth_user_user_permissions_permission_id_1fbb5f2c; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX auth_user_user_permissions_permission_id_1fbb5f2c ON public.auth_user_user_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_user_user_permissions_user_id_a95ead1b; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX auth_user_user_permissions_user_id_a95ead1b ON public.auth_user_user_permissions USING btree (user_id);
+
+
+--
+-- Name: auth_user_username_6821ab7c_like; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX auth_user_username_6821ab7c_like ON public.auth_user USING btree (username varchar_pattern_ops);
+
+
+--
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
+
+
+--
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
+
+
+--
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
+
+
+--
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: insurance_insurance_companies_autor_id_8a0dd3f8; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX insurance_insurance_companies_autor_id_8a0dd3f8 ON public.insurance_insurance_companies USING btree (autor_id);
+
+
+--
+-- Name: insurance_request_for_a_call_services_id_538c2d7c; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX insurance_request_for_a_call_services_id_538c2d7c ON public.insurance_request_for_a_call USING btree (services_id);
+
+
+--
+-- Name: insurance_services_insurance_companies_id_be323fe0; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX insurance_services_insurance_companies_id_be323fe0 ON public.insurance_services USING btree (insurance_companies_id);
+
+
+--
+-- Name: insurance_services_type_services_id_360e15ca; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX insurance_services_type_services_id_360e15ca ON public.insurance_services USING btree (type_services_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups auth_user_groups_group_id_97559544_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_group_id_97559544_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups auth_user_groups_user_id_6a12ed8b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_6a12ed8b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: insurance_insurance_companies insurance_insurance_companies_autor_id_8a0dd3f8_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.insurance_insurance_companies
+    ADD CONSTRAINT insurance_insurance_companies_autor_id_8a0dd3f8_fk_auth_user_id FOREIGN KEY (autor_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: insurance_request_for_a_call insurance_request_fo_services_id_538c2d7c_fk_insurance; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.insurance_request_for_a_call
+    ADD CONSTRAINT insurance_request_fo_services_id_538c2d7c_fk_insurance FOREIGN KEY (services_id) REFERENCES public.insurance_services(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: insurance_services insurance_services_insurance_companies__be323fe0_fk_insurance; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.insurance_services
+    ADD CONSTRAINT insurance_services_insurance_companies__be323fe0_fk_insurance FOREIGN KEY (insurance_companies_id) REFERENCES public.insurance_insurance_companies(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: insurance_services insurance_services_type_services_id_360e15ca_fk_insurance; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.insurance_services
+    ADD CONSTRAINT insurance_services_type_services_id_360e15ca_fk_insurance FOREIGN KEY (type_services_id) REFERENCES public.insurance_type_services(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

@@ -7,3 +7,4 @@ services:
             - ./:/usr/src/app/
         ports:
             - "8008:8008"
+

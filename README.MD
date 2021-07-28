@@ -16,10 +16,17 @@
         -docker-compose up
         Далее необходимо запустить приложение db и выполнить импорт БД командой
         PGPASSWORD="1234" psql -f db.dump -h localhost -U admin insurance_brother
+    Запуск RabbitMQ
+        -docker-compose build
+        -docker-compose up
     Сборка приложения
         -docker-compose build
         -docker-compose up
 
 Доступ к сайту
 http://127.0.0.1:8008
+
+TODU
+сделать тесты
+не работает воркеры завтра починю
 

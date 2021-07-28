@@ -18,8 +18,9 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+print("getcws settung   "+os.getcwd())
 configParser = configparser.ConfigParser()
+
 configParser.read_file(open('config.ini'))
 
 # Quick-start development settings - unsuitable for production
@@ -31,7 +32,9 @@ SECRET_KEY = 'django-insecure-()^efh(hhx@49g(^t^j#s1^&!xw1@c$^yx9$-o)tmu3em$mb&t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'insurance-brother.herokuapp.com']
+os.environ["URL_AT_THE_MOMENT"] = "http://localhost:8008"
+os.environ["RabbitMQ_HOST"] = "host.docker.internal"
+ALLOWED_HOSTS = ['127.0.0.1', 'insurance-brother.herokuapp.com', 'localhost']
 
 
 # Application definition
@@ -231,3 +234,12 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+
+
+#DataFlair
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'InsureYourBrother@gmail.com'
+EMAIL_HOST_PASSWORD = 'JzVd~IbEA'

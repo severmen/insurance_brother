@@ -4,6 +4,11 @@
 {% endblock %}
 
 {% block body %}
+    {% if messages %}
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+{% endif %}
     <h1>Компании</h1>
 
     <form action="#" method="get">

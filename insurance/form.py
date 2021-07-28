@@ -4,17 +4,24 @@ import re
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, Group
+from django.forms import Textarea
 
 from .models import Insurance_companies, Services, Request_for_a_call, Type_services
+from .services import MaintenanceServices
 
 
 class RegisterForm(UserCreationForm):
     '''
     форма регистрации
     '''
+    first_name = forms.CharField(label = "Имя",required=True, max_length=150)
+    last_name = forms.CharField(label = "Фамилийя",required=True, max_length=150)
+    email = forms.EmailField(required=True, max_length=150)
+
     class Meta:
         model = User
-        fields = ('username','first_name', 'last_name','password1','password2',)
+        fields = ('username','first_name', 'last_name','email','password1','password2',)
+
 
 
     def save(self, commit=True):
@@ -24,11 +31,14 @@ class RegisterForm(UserCreationForm):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])
         if commit:
-            user.is_staff = True
+            user.is_staff = False
             #добаляем в группу
             user.save()
             group = Group.objects.get(id=1)
             group.user_set.add(user)
+        #ставим в очередь
+        service = MaintenanceServices()
+        service.send_confirmation(user)
         return user
 
 
@@ -73,6 +83,8 @@ class Request_for_a_call_Form(forms.Form):
                                          services = Services.objects.get(id = int(self.data.get('id'))),
                                          comment = self.data.get('comment'))
         one_request.save()
+        MaintenanceServices.send_new_request(self, one_request)
+        services = MaintenanceServices()
 
 
 class Search_Services(forms.Form):
@@ -140,3 +152,7 @@ class Search_Services(forms.Form):
             return qs.order_by("insurance_cost")
         else:
             return qs.order_by("-insurance_cost")
+
+
+class PasswordRecoverForm(forms.Form):
+    login = forms.CharField(label = "Логин полльзователя")

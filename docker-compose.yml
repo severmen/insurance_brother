@@ -2,8 +2,14 @@ services:
     webcs:
         build: ./
         command:
+            #python worker_send_confirmation.py
+            #python worker_send_new_request.py
+
+            #python worker/worker_send_confirmation.p
+            #python worker/worker_send_new_request.py
             gunicorn --bind 0.0.0.0:8008 project.wsgi:application --reload
-            #|| python worker/worker_send_confirmation.py ||   python worker/worker_send_new_request.py
+
+
 
         volumes:
             - ./:/usr/src/app/

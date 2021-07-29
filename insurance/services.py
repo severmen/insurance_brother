@@ -5,7 +5,8 @@ import os
 class MaintenanceServices:
     def send_new_request(self, request_info):
         '''
-        Функция
+        Функция отправлет сообщение в очередь
+        для отправки на почту сообщения о новом запросе
         '''
         connection = pika.BlockingConnection(
             pika.ConnectionParameters(host=os.environ["RabbitMQ_HOST"]))
@@ -25,6 +26,10 @@ class MaintenanceServices:
         }))
 
     def send_confirmation(self, new_user):
+        '''
+        Функция отправлет сообщение в очередь
+        для потдтверждения регистрации
+        '''
         connection = pika.BlockingConnection(
             pika.ConnectionParameters(host=os.environ["RabbitMQ_HOST"]))
         channel = connection.channel()

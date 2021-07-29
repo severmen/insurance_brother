@@ -14,19 +14,24 @@
     Сборка БД
         -docker-compose build
         -docker-compose up
-        Далее необходимо запустить приложение db и выполнить импорт БД командой
+        Далее необходимо запустить CLI приложения db и выполнить импорт БД командой
         PGPASSWORD="1234" psql -f db.dump -h localhost -U admin insurance_brother
     Запуск RabbitMQ
         -docker-compose build
         -docker-compose up
-    Сборка приложения
+    Сборка приложения и запуск воркеров
         -docker-compose build
         -docker-compose up
+        переходим в CLI и в папку worker
+        -python worker_send_confirmation.py
+        -python worker_send_new_request.py
+    
 
 Доступ к сайту
 http://127.0.0.1:8008
 
-TODU
-сделать тесты
-не работает воркеры завтра починю
+TO-DU
+-написать тесты
+-востановление пароля
+
 

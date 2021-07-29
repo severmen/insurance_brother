@@ -2,9 +2,13 @@ import pika
 import json
 import os
 import django
+import sys
+
 from django.core.mail import send_mail
 
-os.chdir(os.getcwd()+"/../")
+sys.path.insert(1, os.getcwd()+"/..")
+os.chdir(os.getcwd()+"/..")
+
 
 from project.settings import EMAIL_HOST_USER
 
@@ -16,7 +20,7 @@ django.setup()
 
 def send_new_request(ch, method, properties, body):
     '''
-
+    отправлет email сообщение с сылкой для потдверждения
     '''
     body = json.loads(body)
     subject = "Новый отклик на ваш сервис"
@@ -29,7 +33,7 @@ def send_new_request(ch, method, properties, body):
     send_mail(subject, 
             message, EMAIL_HOST_USER, [body.get('email')], fail_silently = False)
     ch.basic_ack(delivery_tag=method.delivery_tag)
-    print("Сообщение отправлено")
+    print("Запрос на потверждение почты получен и обработан")
 
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(os.environ["RabbitMQ_HOST"], '5672'))
@@ -44,7 +48,3 @@ print ( '[*] Ожидание сообщений.' )
 channel.start_consuming ()
 
 
-#send_confirmation_queue
-def send_confirmation(ch, method, properties, body):
-    a = 1
-    print("I am here")

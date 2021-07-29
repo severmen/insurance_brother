@@ -2,27 +2,28 @@ import pika
 import json
 import os
 import django
+import sys
 
 from django.core.mail import send_mail
 
-
-print("fgdg---"+os.getcwd())
-#os.chdir(os.getcwd()+"/../")
+sys.path.insert(1, os.getcwd()+"/..")
+os.chdir(os.getcwd()+"/..")
 
 from project.settings import EMAIL_HOST_USER
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "project.settings")
-
-
 django.setup()
 
 
 def send_new_request(ch, method, properties, body):
+    '''
+    отправлет на email сообщение, что пришла новая заявка
+    '''
     body = json.loads(body)
     subject = "Подтверждение регистрации"
     url = os.environ["URL_AT_THE_MOMENT"] + "/registration_confirmations/"+body.get("id")+"/"+body.get("hash")
-    message = "Добрый день "+body.get('surname') + "<br> "\
-              +body.get('name') +"!<br>" +"для подтверждение регистрации на сервисе застрахуй братуху перейдите по <a href = \""+url+" \">ссылке</a><br>"   \
+    message = "Добрый день "+body.get('surname') +" "+ body.get('name') +"!<br> "\
+              +"для подтверждение регистрации на сервисе застрахуй братуху перейдите по <a href = \""+url+" \">ссылке</a><br>"   \
               +"C уважением сервис застрахуй братуху"
     send_mail(subject = subject,
               message = "Cooбщение",
@@ -32,7 +33,7 @@ def send_new_request(ch, method, properties, body):
               fail_silently=False,
               )
     ch.basic_ack(delivery_tag=method.delivery_tag)
-    print("Сообщение отправлено")
+    print("Запрос на услугу получен и обработан")
 
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(os.environ["RabbitMQ_HOST"], '5672'))
@@ -45,7 +46,4 @@ channel.basic_consume(queue='send_confirmation_queue',
 
 print ( '[*] Ожидание сообщений.' )
 channel.start_consuming ()
-
-
-#send_confirmation_queue
 

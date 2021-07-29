@@ -6,6 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, Group
 from django.forms import Textarea
 
+
 from .models import Insurance_companies, Services, Request_for_a_call, Type_services
 from .services import MaintenanceServices
 
@@ -26,7 +27,7 @@ class RegisterForm(UserCreationForm):
 
     def save(self, commit=True):
         '''
-        функция проводит валидацию и добовлет пользователя в группу
+        функция проводит валидацию и добавлет пользователя в группу
         '''
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])
@@ -131,7 +132,7 @@ class Search_Services(forms.Form):
                 all_companies = Insurance_companies.objects.filter(expert_rating = self.data.get('rating'))
                 for id, one_filter_qs in enumerate(copy.copy(qs)):
                     if id == 0:
-                        qs = qs.filter(id = -1)
+                        qs = qs.none()
                     x = (True for x in all_companies if one_filter_qs.insurance_companies == x)
                     if next(x,None) == True:
                         qs = qs | Services.objects.filter(id = one_filter_qs.id)

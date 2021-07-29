@@ -66,6 +66,10 @@ def user_logout(request):
 
 
 class PasswordRecovery(FormView):
+    '''
+    ещё не работает
+    '''
+
     template_name = 'insurance/password_recover.html'
     form_class = PasswordRecoverForm
     success_url = '/'
@@ -77,12 +81,18 @@ class PasswordRecovery(FormView):
         #email.send_new_request()
         return super().form_valid(form)
 
-class registration_confirmations(RedirectView):
-    #url = "http://localhost:8000/"
+class RegistrationConfirmations(RedirectView):
+    '''
+    потверждение регистрации
+    '''
     url = reverse_lazy('admin:index')
     def get_redirect_url(self, *args, **kwargs):
+        '''
+        функция проверет правильность и актуальность URL адреса потверждения
+        формирует сообщение о статусе
+        '''
         try:
-            one_user_info = User.objects.get(id = args[0])
+            one_user_info = User.objects.get(id = args[0],is_staff = False)
             if one_user_info.is_staff == True:
                 raise Exception()
             hash = hashlib.sha1(
@@ -90,13 +100,9 @@ class registration_confirmations(RedirectView):
             if hash == args[1]:
                 one_user_info.is_staff = True
                 one_user_info.save()
-            else:
-                raise Exception()
 
-            messages.add_message(self.request, messages.ERROR, 'Пользователь успешно активирован')
+            messages.add_message(self.request, messages.INFO, 'Пользователь успешно активирован')
 
         except:
-            messages.add_message(self.request, messages.INFO, 'Ссылка не действительна')
-        #article = get_object_or_404(Article, pk=kwargs['pk'])
-        #article.update_counter()
+            messages.add_message(self.request, messages.ERROR, 'Ссылка не действительна')
         return super().get_redirect_url(*args, **kwargs)

@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.20
+-- Dumped from database version 13.3 (Debian 13.3-1.pgdg100+1)
 -- Dumped by pg_dump version 13.3 (Debian 13.3-1.pgdg100+1)
 
 SET statement_timeout = 0;
@@ -311,6 +311,8 @@ COMMENT ON EXTENSION xml2 IS 'XPath querying and XSLT';
 
 
 SET default_tablespace = '';
+
+SET default_table_access_method = heap;
 
 --
 -- Name: auth_group; Type: TABLE; Schema: public; Owner: admin
@@ -965,10 +967,10 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 --
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-11	pbkdf2_sha256$260000$XgiQSnDnVDs9C1ZeHcLQjm$8dZduHkk1yVi117Q7DQjTyncdDs8H6yJ66zoDcNQjYs=	2021-07-22 10:13:13.717662+04	f	alliance	Филлип	Гронемайер		t	t	2021-07-21 14:33:54.266831+04
-8	pbkdf2_sha256$260000$HVRqqgud2da9l5mOJZW21C$WkNTjd1Eg8Qgs9yVpeq4e2mAzF1n4bWoQMcS+FHr+nQ=	2021-07-22 10:30:34.113212+04	f	Alfastrakhovanie	Альфа	Альфов		t	t	2021-07-20 20:05:02.506091+04
-7	pbkdf2_sha256$260000$WnHOMaZ9MCgF7BlvWT9UKq$re5QRDEewI8cktbR8znDeoHeynT75qUlehk1Wigqfxs=	2021-07-23 16:27:02.799955+04	f	rosgosstrakh	Геннадий	Гальперин		t	t	2021-07-20 16:22:10.079916+04
-1	pbkdf2_sha256$260000$idBzBdsNlkdEAiiNJXvF3e$Lzc/CDxqE7A8hzcIktTdOiwJXo67lyeV/GTfffLxnyU=	2021-07-23 20:46:08+04	t	admin				t	t	2021-07-12 20:13:59+04
+1	pbkdf2_sha256$260000$idBzBdsNlkdEAiiNJXvF3e$Lzc/CDxqE7A8hzcIktTdOiwJXo67lyeV/GTfffLxnyU=	2021-07-29 08:41:12.432101+00	t	admin				t	t	2021-07-12 16:13:59+00
+11	pbkdf2_sha256$260000$XgiQSnDnVDs9C1ZeHcLQjm$8dZduHkk1yVi117Q7DQjTyncdDs8H6yJ66zoDcNQjYs=	2021-07-22 06:13:13+00	f	alliance	Филлип	Гронемайер	Alliance_Insurance@rambler.ru	t	t	2021-07-21 10:33:54+00
+8	pbkdf2_sha256$260000$HVRqqgud2da9l5mOJZW21C$WkNTjd1Eg8Qgs9yVpeq4e2mAzF1n4bWoQMcS+FHr+nQ=	2021-07-22 06:30:34+00	f	Alfastrakhovanie	Альфа	Альфов	alfastrakhovanie1@rambler.ru	t	t	2021-07-20 16:05:02+00
+7	pbkdf2_sha256$260000$WnHOMaZ9MCgF7BlvWT9UKq$re5QRDEewI8cktbR8znDeoHeynT75qUlehk1Wigqfxs=	2021-07-23 12:27:02+00	f	rosgosstrakh	Геннадий	Гальперин	rozgostrahrohgostrahovaic@gmail.com	t	t	2021-07-20 12:22:10+00
 \.
 
 
@@ -996,58 +998,63 @@ COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
 --
 
 COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
-1	2021-07-13 21:07:36.897084+04	1	Руководители страховых компаний	1	[{"added": {}}]	3	1
-2	2021-07-13 21:08:35.93883+04	2	admin2	1	[{"added": {}}]	4	1
-3	2021-07-13 21:15:53.060334+04	2	admin2	2	[{"changed": {"fields": ["Groups"]}}]	4	1
-4	2021-07-13 21:16:37.375728+04	1	Руководители страховых компаний	2	[{"changed": {"fields": ["Permissions"]}}]	3	1
-5	2021-07-13 23:01:03.085145+04	3	admin3	1	[{"added": {}}]	4	1
-6	2021-07-13 23:20:35.901566+04	3	admin3	2	[{"changed": {"fields": ["Groups"]}}]	4	1
-7	2021-07-13 23:22:04.81557+04	1	Руководители страховых компаний	2	[{"changed": {"fields": ["Permissions"]}}]	3	1
-10	2021-07-14 20:59:55.457888+04	1	Type_services object (1)	1	[{"added": {}}]	9	1
-11	2021-07-14 21:00:58.060017+04	2	страхование дома	1	[{"added": {}}]	9	1
-12	2021-07-14 21:01:20.937012+04	3	каско	1	[{"added": {}}]	9	1
-13	2021-07-14 21:01:55.808017+04	4	страхование жизни	1	[{"added": {}}]	9	1
-16	2021-07-17 10:59:43.196251+04	2	Страховая компания 3 админа	2	[{"changed": {"fields": ["\\u041b\\u043e\\u0433\\u043e\\u0442\\u0438\\u043f \\u043a\\u043e\\u043c\\u043f\\u0430\\u043d\\u0438\\u0438"]}}]	7	1
-17	2021-07-17 11:00:07.664738+04	1	Компания второго админа	2	[{"changed": {"fields": ["\\u041b\\u043e\\u0433\\u043e\\u0442\\u0438\\u043f \\u043a\\u043e\\u043c\\u043f\\u0430\\u043d\\u0438\\u0438"]}}]	7	1
-19	2021-07-18 21:43:26.741954+04	1	застрахуем ваше авто компания второго админа	2	[{"changed": {"fields": ["\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	10	1
-20	2021-07-18 21:44:03.872481+04	2	Застрахуем ваше автом по полной программе компания второго админа	2	[{"changed": {"fields": ["\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	10	1
-21	2021-07-18 21:45:21.553272+04	3	Не бойся ушибитьс компания 3 админа	2	[{"changed": {"fields": ["\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	10	1
-22	2021-07-18 21:47:09.402251+04	1	не отпределил	2	[{"changed": {"fields": ["Services"]}}]	8	1
-23	2021-07-18 22:53:59.876837+04	1	Руководители страховых компаний	2	[{"changed": {"fields": ["Permissions"]}}]	3	1
-24	2021-07-18 22:55:13.411759+04	1	Руководители страховых компаний	2	[{"changed": {"fields": ["Permissions"]}}]	3	1
-31	2021-07-18 23:45:18.114242+04	2	Страховая компания 3 админа	2	[{"changed": {"fields": ["\\u0414\\u0430\\u0442\\u0430 \\u0441\\u043e\\u0437\\u0434\\u0430\\u043d\\u0438\\u044f \\u043a\\u043e\\u043c\\u043f\\u0430\\u043d\\u0438\\u0438"]}}]	7	1
-32	2021-07-18 23:45:38.72594+04	1	Компания второго админа	2	[{"changed": {"fields": ["\\u0414\\u0430\\u0442\\u0430 \\u0441\\u043e\\u0437\\u0434\\u0430\\u043d\\u0438\\u044f \\u043a\\u043e\\u043c\\u043f\\u0430\\u043d\\u0438\\u0438"]}}]	7	1
-33	2021-07-20 18:25:33.657613+04	None	h`	1	[{"added": {}}]	7	7
-34	2021-07-20 18:39:45.744411+04	7	123	1	[{"added": {}}]	7	7
-35	2021-07-20 18:42:41.174044+04	7	123	3		7	7
-36	2021-07-20 18:45:53.685249+04	8	Розгострах	1	[{"added": {}}]	7	7
-37	2021-07-20 18:49:43.564415+04	8	Более 250 пунктов урегулирования убытков по ОСАГО на территории России готовы оказать поддержку при страховом случае.	1	[{"added": {}}]	9	7
-38	2021-07-20 18:50:14.206699+04	8	Розгострах	2	[{"changed": {"fields": ["\\u0414\\u0430\\u0442\\u0430 \\u0441\\u043e\\u0437\\u0434\\u0430\\u043d\\u0438\\u044f \\u043a\\u043e\\u043c\\u043f\\u0430\\u043d\\u0438\\u0438"]}}]	7	7
-39	2021-07-20 18:51:58.287407+04	9	«Каско Профессионал» — отличная альтернатива обычному полису КАСКО.	1	[{"added": {}}]	9	7
-40	2021-07-20 18:53:20.665094+04	10	Для страхования квартиры от залива, пожара или кражи не нужно идти в офис, приглашать экспертов для осмотра и платить за те риски, которые вам не нужны.	1	[{"added": {}}]	9	7
-41	2021-07-20 20:16:54.838982+04	9	Альфа страхование	1	[{"added": {}}]	7	8
-42	2021-07-20 20:18:04.371559+04	11	Ситуация на дороге никогда не бывает предсказуемой. Даже если вы давно водите автомобиль и прекрасно справляетесь с его управлением, вы не можете быть уверены в своей безопасности, ведь причиной ДТП м	1	[{"added": {}}]	9	8
-43	2021-07-20 20:18:34.580425+04	12	Полис КАСКО позволит вам отремонтировать машину или получить компенсацию в случае ее гибели. Страхование автомобиля осуществляется по рискам «Хищение» и «Повреждение».	1	[{"added": {}}]	9	8
-44	2021-07-20 21:28:42.567455+04	13	Страхование жизни и здоровья — один из первых и основных видов страхования, который и по сей день остается популярным. Разнообразные программы помогут получить компенсацию, если застрахованный человек	1	[{"added": {}}]	9	8
-45	2021-07-21 14:37:46.902056+04	10	альянс	1	[{"added": {}}]	7	11
-46	2021-07-21 14:39:45.750057+04	14	Страхование квартиры Allianz Happy Home Комплексная защита вашего жилья, домашнего имущества и гражданской ответственности перед соседями	1	[{"added": {}}]	9	11
-47	2021-07-21 14:40:18.68948+04	15	Страхование загородного дома Allianz Happy Home Комплексная защита вашего жилья, домашнего имущества и гражданской ответственности перед третьими лицами	1	[{"added": {}}]	9	11
-48	2021-07-21 14:47:10.977184+04	1	Руководители страховых компаний	2	[{"changed": {"fields": ["Permissions"]}}]	3	1
-49	2021-07-22 10:13:35.359545+04	14	<p>Страхование квартиры комплексная защита вашего жилья, домашнего имущества и гражданской ответственности перед соседями</p>	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	11
-50	2021-07-22 10:17:51.752879+04	15	<p>Страхование загородного дома&nbsp; Комплексная защита вашего жилья, домашнего имущества и гражданской ответственности перед третьими лицами</p>	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	11
-51	2021-07-22 10:23:12.538213+04	16	<h3>Почему стоит выбрать&nbsp;<strong>Allianz Защита+</strong>?</h3>\r\n\r\n<ul>\r\n\t<li>лечение в ведущих клиниках в Израиле, Испании, Южной Корее и России с возможностью выбора</li>\r\n</ul>\r\n\r\n<ul>\r\n\t<li>в	1	[{"added": {}}]	9	11
-52	2021-07-22 10:24:31.947772+04	16	Cтрахование от критических заболеваний	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	11
-53	2021-07-22 10:26:45.248516+04	16	Cтрахование от критических заболеваний	2	[]	9	11
-54	2021-07-22 10:28:38.048248+04	8	Помощь на дороге	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	7
-55	2021-07-22 10:29:35.460971+04	9	Каско Профессионал	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	7
-56	2021-07-22 10:29:54.420996+04	9	Каско Профессионал	2	[{"changed": {"fields": ["\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	7
-57	2021-07-22 10:30:20.581803+04	10	Ваше жилье	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	7
-58	2021-07-22 10:34:06.570903+04	13	Страхование от несчастного случия	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u0421\\u0440\\u043e\\u043a\\u0438 \\u0441\\u0442\\u0440\\u0430\\u0445\\u043e\\u0432\\u0430\\u043d\\u0438\\u044f"]}}]	9	8
-59	2021-07-22 10:36:36.00822+04	12	КАСКО	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	8
-60	2021-07-22 10:36:45.583528+04	11	ОСАГО	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	8
-61	2021-07-23 17:37:20.676442+04	8	Розгострах	2	[]	7	7
-62	2021-07-23 18:32:13.515698+04	10	уца	3		10	7
-63	2021-07-23 20:57:26.516449+04	1	admin	2	[]	4	1
+1	2021-07-13 17:07:36.897084+00	1	Руководители страховых компаний	1	[{"added": {}}]	3	1
+2	2021-07-13 17:08:35.93883+00	2	admin2	1	[{"added": {}}]	4	1
+3	2021-07-13 17:15:53.060334+00	2	admin2	2	[{"changed": {"fields": ["Groups"]}}]	4	1
+4	2021-07-13 17:16:37.375728+00	1	Руководители страховых компаний	2	[{"changed": {"fields": ["Permissions"]}}]	3	1
+5	2021-07-13 19:01:03.085145+00	3	admin3	1	[{"added": {}}]	4	1
+6	2021-07-13 19:20:35.901566+00	3	admin3	2	[{"changed": {"fields": ["Groups"]}}]	4	1
+7	2021-07-13 19:22:04.81557+00	1	Руководители страховых компаний	2	[{"changed": {"fields": ["Permissions"]}}]	3	1
+10	2021-07-14 16:59:55.457888+00	1	Type_services object (1)	1	[{"added": {}}]	9	1
+11	2021-07-14 17:00:58.060017+00	2	страхование дома	1	[{"added": {}}]	9	1
+12	2021-07-14 17:01:20.937012+00	3	каско	1	[{"added": {}}]	9	1
+13	2021-07-14 17:01:55.808017+00	4	страхование жизни	1	[{"added": {}}]	9	1
+16	2021-07-17 06:59:43.196251+00	2	Страховая компания 3 админа	2	[{"changed": {"fields": ["\\u041b\\u043e\\u0433\\u043e\\u0442\\u0438\\u043f \\u043a\\u043e\\u043c\\u043f\\u0430\\u043d\\u0438\\u0438"]}}]	7	1
+17	2021-07-17 07:00:07.664738+00	1	Компания второго админа	2	[{"changed": {"fields": ["\\u041b\\u043e\\u0433\\u043e\\u0442\\u0438\\u043f \\u043a\\u043e\\u043c\\u043f\\u0430\\u043d\\u0438\\u0438"]}}]	7	1
+19	2021-07-18 17:43:26.741954+00	1	застрахуем ваше авто компания второго админа	2	[{"changed": {"fields": ["\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	10	1
+20	2021-07-18 17:44:03.872481+00	2	Застрахуем ваше автом по полной программе компания второго админа	2	[{"changed": {"fields": ["\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	10	1
+21	2021-07-18 17:45:21.553272+00	3	Не бойся ушибитьс компания 3 админа	2	[{"changed": {"fields": ["\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	10	1
+22	2021-07-18 17:47:09.402251+00	1	не отпределил	2	[{"changed": {"fields": ["Services"]}}]	8	1
+23	2021-07-18 18:53:59.876837+00	1	Руководители страховых компаний	2	[{"changed": {"fields": ["Permissions"]}}]	3	1
+24	2021-07-18 18:55:13.411759+00	1	Руководители страховых компаний	2	[{"changed": {"fields": ["Permissions"]}}]	3	1
+31	2021-07-18 19:45:18.114242+00	2	Страховая компания 3 админа	2	[{"changed": {"fields": ["\\u0414\\u0430\\u0442\\u0430 \\u0441\\u043e\\u0437\\u0434\\u0430\\u043d\\u0438\\u044f \\u043a\\u043e\\u043c\\u043f\\u0430\\u043d\\u0438\\u0438"]}}]	7	1
+32	2021-07-18 19:45:38.72594+00	1	Компания второго админа	2	[{"changed": {"fields": ["\\u0414\\u0430\\u0442\\u0430 \\u0441\\u043e\\u0437\\u0434\\u0430\\u043d\\u0438\\u044f \\u043a\\u043e\\u043c\\u043f\\u0430\\u043d\\u0438\\u0438"]}}]	7	1
+33	2021-07-20 14:25:33.657613+00	None	h`	1	[{"added": {}}]	7	7
+34	2021-07-20 14:39:45.744411+00	7	123	1	[{"added": {}}]	7	7
+35	2021-07-20 14:42:41.174044+00	7	123	3		7	7
+36	2021-07-20 14:45:53.685249+00	8	Розгострах	1	[{"added": {}}]	7	7
+37	2021-07-20 14:49:43.564415+00	8	Более 250 пунктов урегулирования убытков по ОСАГО на территории России готовы оказать поддержку при страховом случае.	1	[{"added": {}}]	9	7
+38	2021-07-20 14:50:14.206699+00	8	Розгострах	2	[{"changed": {"fields": ["\\u0414\\u0430\\u0442\\u0430 \\u0441\\u043e\\u0437\\u0434\\u0430\\u043d\\u0438\\u044f \\u043a\\u043e\\u043c\\u043f\\u0430\\u043d\\u0438\\u0438"]}}]	7	7
+39	2021-07-20 14:51:58.287407+00	9	«Каско Профессионал» — отличная альтернатива обычному полису КАСКО.	1	[{"added": {}}]	9	7
+40	2021-07-20 14:53:20.665094+00	10	Для страхования квартиры от залива, пожара или кражи не нужно идти в офис, приглашать экспертов для осмотра и платить за те риски, которые вам не нужны.	1	[{"added": {}}]	9	7
+41	2021-07-20 16:16:54.838982+00	9	Альфа страхование	1	[{"added": {}}]	7	8
+42	2021-07-20 16:18:04.371559+00	11	Ситуация на дороге никогда не бывает предсказуемой. Даже если вы давно водите автомобиль и прекрасно справляетесь с его управлением, вы не можете быть уверены в своей безопасности, ведь причиной ДТП м	1	[{"added": {}}]	9	8
+43	2021-07-20 16:18:34.580425+00	12	Полис КАСКО позволит вам отремонтировать машину или получить компенсацию в случае ее гибели. Страхование автомобиля осуществляется по рискам «Хищение» и «Повреждение».	1	[{"added": {}}]	9	8
+44	2021-07-20 17:28:42.567455+00	13	Страхование жизни и здоровья — один из первых и основных видов страхования, который и по сей день остается популярным. Разнообразные программы помогут получить компенсацию, если застрахованный человек	1	[{"added": {}}]	9	8
+45	2021-07-21 10:37:46.902056+00	10	альянс	1	[{"added": {}}]	7	11
+46	2021-07-21 10:39:45.750057+00	14	Страхование квартиры Allianz Happy Home Комплексная защита вашего жилья, домашнего имущества и гражданской ответственности перед соседями	1	[{"added": {}}]	9	11
+47	2021-07-21 10:40:18.68948+00	15	Страхование загородного дома Allianz Happy Home Комплексная защита вашего жилья, домашнего имущества и гражданской ответственности перед третьими лицами	1	[{"added": {}}]	9	11
+48	2021-07-21 10:47:10.977184+00	1	Руководители страховых компаний	2	[{"changed": {"fields": ["Permissions"]}}]	3	1
+49	2021-07-22 06:13:35.359545+00	14	<p>Страхование квартиры комплексная защита вашего жилья, домашнего имущества и гражданской ответственности перед соседями</p>	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	11
+50	2021-07-22 06:17:51.752879+00	15	<p>Страхование загородного дома&nbsp; Комплексная защита вашего жилья, домашнего имущества и гражданской ответственности перед третьими лицами</p>	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	11
+51	2021-07-22 06:23:12.538213+00	16	<h3>Почему стоит выбрать&nbsp;<strong>Allianz Защита+</strong>?</h3>\r\n\r\n<ul>\r\n\t<li>лечение в ведущих клиниках в Израиле, Испании, Южной Корее и России с возможностью выбора</li>\r\n</ul>\r\n\r\n<ul>\r\n\t<li>в	1	[{"added": {}}]	9	11
+52	2021-07-22 06:24:31.947772+00	16	Cтрахование от критических заболеваний	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	11
+53	2021-07-22 06:26:45.248516+00	16	Cтрахование от критических заболеваний	2	[]	9	11
+54	2021-07-22 06:28:38.048248+00	8	Помощь на дороге	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	7
+55	2021-07-22 06:29:35.460971+00	9	Каско Профессионал	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	7
+56	2021-07-22 06:29:54.420996+00	9	Каско Профессионал	2	[{"changed": {"fields": ["\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	7
+57	2021-07-22 06:30:20.581803+00	10	Ваше жилье	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	7
+58	2021-07-22 06:34:06.570903+00	13	Страхование от несчастного случия	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u0421\\u0440\\u043e\\u043a\\u0438 \\u0441\\u0442\\u0440\\u0430\\u0445\\u043e\\u0432\\u0430\\u043d\\u0438\\u044f"]}}]	9	8
+59	2021-07-22 06:36:36.00822+00	12	КАСКО	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	8
+60	2021-07-22 06:36:45.583528+00	11	ОСАГО	2	[{"changed": {"fields": ["\\u041d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438", "\\u041a\\u0440\\u0430\\u0442\\u043a\\u043e\\u0435 \\u043e\\u043f\\u0438\\u0441\\u0430\\u043d\\u0438\\u0435 \\u0443\\u0441\\u043b\\u0443\\u0433\\u0438"]}}]	9	8
+61	2021-07-23 13:37:20.676442+00	8	Розгострах	2	[]	7	7
+62	2021-07-23 14:32:13.515698+00	10	уца	3		10	7
+63	2021-07-23 16:57:26.516449+00	1	admin	2	[]	4	1
+64	2021-07-29 08:42:31.859812+00	8	Alfastrakhovanie	2	[{"changed": {"fields": ["Email address"]}}]	4	1
+65	2021-07-29 08:42:58.669586+00	11	alliance	2	[{"changed": {"fields": ["Email address"]}}]	4	1
+66	2021-07-29 08:42:58.779981+00	11	alliance	2	[]	4	1
+67	2021-07-29 08:43:41.460907+00	8	Alfastrakhovanie	2	[{"changed": {"fields": ["Email address"]}}]	4	1
+68	2021-07-29 08:43:59.486762+00	7	rosgosstrakh	2	[{"changed": {"fields": ["Email address"]}}]	4	1
 \.
 
 
@@ -1074,34 +1081,34 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 --
 
 COPY public.django_migrations (id, app, name, applied) FROM stdin;
-1	contenttypes	0001_initial	2021-07-18 22:46:50.486711+04
-2	auth	0001_initial	2021-07-18 22:46:50.663713+04
-3	admin	0001_initial	2021-07-18 22:46:50.715711+04
-4	admin	0002_logentry_remove_auto_add	2021-07-18 22:46:50.730709+04
-5	admin	0003_logentry_add_action_flag_choices	2021-07-18 22:46:50.745711+04
-6	contenttypes	0002_remove_content_type_name	2021-07-18 22:46:50.782729+04
-7	auth	0002_alter_permission_name_max_length	2021-07-18 22:46:50.804712+04
-8	auth	0003_alter_user_email_max_length	2021-07-18 22:46:50.824712+04
-9	auth	0004_alter_user_username_opts	2021-07-18 22:46:50.842714+04
-10	auth	0005_alter_user_last_login_null	2021-07-18 22:46:50.859708+04
-11	auth	0006_require_contenttypes_0002	2021-07-18 22:46:50.863713+04
-12	auth	0007_alter_validators_add_error_messages	2021-07-18 22:46:50.87571+04
-13	auth	0008_alter_user_username_max_length	2021-07-18 22:46:50.903712+04
-14	auth	0009_alter_user_last_name_max_length	2021-07-18 22:46:50.92072+04
-15	auth	0010_alter_group_name_max_length	2021-07-18 22:46:50.935712+04
-16	auth	0011_update_proxy_permissions	2021-07-18 22:46:50.95771+04
-17	auth	0012_alter_user_first_name_max_length	2021-07-18 22:46:50.974716+04
-18	insurance	0001_initial	2021-07-18 22:46:51.11671+04
-19	sessions	0001_initial	2021-07-18 22:46:51.138712+04
-20	insurance	0002_auto_20210718_2343	2021-07-18 23:43:49.411844+04
-21	insurance	0003_services_name	2021-07-21 14:44:06.093264+04
-22	insurance	0004_alter_services_description	2021-07-21 14:49:20.479198+04
-23	insurance	0005_alter_services_description	2021-07-21 15:00:47.70692+04
-24	insurance	0006_auto_20210724_0929	2021-07-24 09:51:26.268343+04
-25	insurance	0007_auto_20210724_0951	2021-07-24 09:51:26.379339+04
-26	insurance	0008_insurance_companies_medaltype	2021-07-24 10:22:04.888431+04
-27	insurance	0009_auto_20210724_1027	2021-07-24 10:27:27.830872+04
-28	insurance	0010_alter_insurance_companies_expert_rating	2021-07-24 11:13:22.50914+04
+1	contenttypes	0001_initial	2021-07-18 18:46:50.486711+00
+2	auth	0001_initial	2021-07-18 18:46:50.663713+00
+3	admin	0001_initial	2021-07-18 18:46:50.715711+00
+4	admin	0002_logentry_remove_auto_add	2021-07-18 18:46:50.730709+00
+5	admin	0003_logentry_add_action_flag_choices	2021-07-18 18:46:50.745711+00
+6	contenttypes	0002_remove_content_type_name	2021-07-18 18:46:50.782729+00
+7	auth	0002_alter_permission_name_max_length	2021-07-18 18:46:50.804712+00
+8	auth	0003_alter_user_email_max_length	2021-07-18 18:46:50.824712+00
+9	auth	0004_alter_user_username_opts	2021-07-18 18:46:50.842714+00
+10	auth	0005_alter_user_last_login_null	2021-07-18 18:46:50.859708+00
+11	auth	0006_require_contenttypes_0002	2021-07-18 18:46:50.863713+00
+12	auth	0007_alter_validators_add_error_messages	2021-07-18 18:46:50.87571+00
+13	auth	0008_alter_user_username_max_length	2021-07-18 18:46:50.903712+00
+14	auth	0009_alter_user_last_name_max_length	2021-07-18 18:46:50.92072+00
+15	auth	0010_alter_group_name_max_length	2021-07-18 18:46:50.935712+00
+16	auth	0011_update_proxy_permissions	2021-07-18 18:46:50.95771+00
+17	auth	0012_alter_user_first_name_max_length	2021-07-18 18:46:50.974716+00
+18	insurance	0001_initial	2021-07-18 18:46:51.11671+00
+19	sessions	0001_initial	2021-07-18 18:46:51.138712+00
+20	insurance	0002_auto_20210718_2343	2021-07-18 19:43:49.411844+00
+21	insurance	0003_services_name	2021-07-21 10:44:06.093264+00
+22	insurance	0004_alter_services_description	2021-07-21 10:49:20.479198+00
+23	insurance	0005_alter_services_description	2021-07-21 11:00:47.70692+00
+24	insurance	0006_auto_20210724_0929	2021-07-24 05:51:26.268343+00
+25	insurance	0007_auto_20210724_0951	2021-07-24 05:51:26.379339+00
+26	insurance	0008_insurance_companies_medaltype	2021-07-24 06:22:04.888431+00
+27	insurance	0009_auto_20210724_1027	2021-07-24 06:27:27.830872+00
+28	insurance	0010_alter_insurance_companies_expert_rating	2021-07-24 07:13:22.50914+00
 \.
 
 
@@ -1110,12 +1117,13 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 --
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
-mufnxgj38z4v6wrs3yhzv03t6imu2r68	.eJxVjDsOwjAQBe_iGlms_6akzxks73rBAeRIcVIh7o4spYD2zcx7i5T3raa985rmIi4CxOl3w0xPbgOUR273RdLStnVGORR50C6npfDrerh_BzX3OmoKgBHzzZytQ0ZF3jFrAKUZMBhdFBlNxvgASin0ztoQAWyJNvhI4vMF5f03FQ:1m3Lpm:Jwus8DcJFZx7VeMZJUVVJZOQ-iBdaTKrcrNWN9WYbjA	2021-07-27 21:04:38.548234+04
-ntcpbdgr2afqajx1zx8beahpqdijfg5t	.eJxVjEEOwiAQRe_C2hBngAIu3fcMhBlGqRqalHZlvLtp0oVu_3vvv1XK21rT1mVJU1EXher0u1Hmp7QdlEdu91nz3NZlIr0r-qBdj3OR1_Vw_w5q7nWvOQBFyjd7dgMJIftBxACgEaBgTUG2hq31ARCR_OBciACuRBd8ZPX5AuaWNxY:1m3Lzg:4ue33l72pEVqQb7L-5FHo8HNs044-SjMpmsBawHSZC8	2021-07-27 21:14:52.521734+04
-i055ads0dnf6f66bkn09uwz32dnpw1dt	.eJxVjDsOwjAQBe_iGlms_6akzxks73rBAeRIcVIh7o4spYD2zcx7i5T3raa985rmIi5Ci9Pvhpme3AYoj9zui6SlbeuMcijyoF1OS-HX9XD_DmruddQUACPmmzlbh4yKvGPWAEozYDC6KDKajPEBlFLonbUhAtgSbfCRxOcL5y83Fw:1m3NrA:pMVOJMrqeKmf6RDFAzrOuBsZqaiibwlQq8m2U8-mHZM	2021-07-27 23:14:12.638678+04
-4j8dqtcqijan2d8g0burfjk15h1qzvms	.eJxVjDsOwjAQBe_iGlms_6akzxks73rBAeRIcVIh7o4spYD2zcx7i5T3raa985rmIi4CxOl3w0xPbgOUR273RdLStnVGORR50C6npfDrerh_BzX3OmoKgBHzzZytQ0ZF3jFrAKUZMBhdFBlNxvgASin0ztoQAWyJNvhI4vMF5f03FQ:1m3hO7:Z_QE0Obquwj1GT7H57CYv12XTMCd3WKvDVAZTiPLag4	2021-07-28 20:05:31.701616+04
-m0jobq3dw6ks4v0rx07w2t3m6jxkx7j5	.eJxVjEEOwiAQRe_C2hCgMIBL9z0DYWZQqoYmpV0Z765NutDtf-_9l0h5W2vaelnSxOIsvDj9bpjpUdoO-J7bbZY0t3WZUO6KPGiX48zleTncv4Oae_3WFryzoFRBwqwi6xICDBqj9zEYVH5gpBCN9YZNVOAArwysiTQEsk68P8ZONyY:1m6atX:7087kE0J20wU9Q3GVE5FEOtm9fEWPuXanAu49Fc00UE	2021-08-05 19:45:55.740269+04
-qd9x4kruved5be72ivsyd9nvn8kf50qx	.eJxVjDsOwjAQBe_iGlms_6akzxks73rBAeRIcVIh7o4spYD2zcx7i5T3raa985rmIi4CxOl3w0xPbgOUR273RdLStnVGORR50C6npfDrerh_BzX3OmoKgBHzzZytQ0ZF3jFrAKUZMBhdFBlNxvgASin0ztoQAWyJNvhI4vMF5f03FQ:1m6yJM:VZa-zvmbgmnv6nUcfy70KYUqTCW5trL9CVGc8MTKBtM	2021-08-06 20:46:08.374358+04
+mufnxgj38z4v6wrs3yhzv03t6imu2r68	.eJxVjDsOwjAQBe_iGlms_6akzxks73rBAeRIcVIh7o4spYD2zcx7i5T3raa985rmIi4CxOl3w0xPbgOUR273RdLStnVGORR50C6npfDrerh_BzX3OmoKgBHzzZytQ0ZF3jFrAKUZMBhdFBlNxvgASin0ztoQAWyJNvhI4vMF5f03FQ:1m3Lpm:Jwus8DcJFZx7VeMZJUVVJZOQ-iBdaTKrcrNWN9WYbjA	2021-07-27 17:04:38.548234+00
+ntcpbdgr2afqajx1zx8beahpqdijfg5t	.eJxVjEEOwiAQRe_C2hBngAIu3fcMhBlGqRqalHZlvLtp0oVu_3vvv1XK21rT1mVJU1EXher0u1Hmp7QdlEdu91nz3NZlIr0r-qBdj3OR1_Vw_w5q7nWvOQBFyjd7dgMJIftBxACgEaBgTUG2hq31ARCR_OBciACuRBd8ZPX5AuaWNxY:1m3Lzg:4ue33l72pEVqQb7L-5FHo8HNs044-SjMpmsBawHSZC8	2021-07-27 17:14:52.521734+00
+i055ads0dnf6f66bkn09uwz32dnpw1dt	.eJxVjDsOwjAQBe_iGlms_6akzxks73rBAeRIcVIh7o4spYD2zcx7i5T3raa985rmIi5Ci9Pvhpme3AYoj9zui6SlbeuMcijyoF1OS-HX9XD_DmruddQUACPmmzlbh4yKvGPWAEozYDC6KDKajPEBlFLonbUhAtgSbfCRxOcL5y83Fw:1m3NrA:pMVOJMrqeKmf6RDFAzrOuBsZqaiibwlQq8m2U8-mHZM	2021-07-27 19:14:12.638678+00
+4j8dqtcqijan2d8g0burfjk15h1qzvms	.eJxVjDsOwjAQBe_iGlms_6akzxks73rBAeRIcVIh7o4spYD2zcx7i5T3raa985rmIi4CxOl3w0xPbgOUR273RdLStnVGORR50C6npfDrerh_BzX3OmoKgBHzzZytQ0ZF3jFrAKUZMBhdFBlNxvgASin0ztoQAWyJNvhI4vMF5f03FQ:1m3hO7:Z_QE0Obquwj1GT7H57CYv12XTMCd3WKvDVAZTiPLag4	2021-07-28 16:05:31.701616+00
+m0jobq3dw6ks4v0rx07w2t3m6jxkx7j5	.eJxVjEEOwiAQRe_C2hCgMIBL9z0DYWZQqoYmpV0Z765NutDtf-_9l0h5W2vaelnSxOIsvDj9bpjpUdoO-J7bbZY0t3WZUO6KPGiX48zleTncv4Oae_3WFryzoFRBwqwi6xICDBqj9zEYVH5gpBCN9YZNVOAArwysiTQEsk68P8ZONyY:1m6atX:7087kE0J20wU9Q3GVE5FEOtm9fEWPuXanAu49Fc00UE	2021-08-05 15:45:55.740269+00
+qd9x4kruved5be72ivsyd9nvn8kf50qx	.eJxVjDsOwjAQBe_iGlms_6akzxks73rBAeRIcVIh7o4spYD2zcx7i5T3raa985rmIi4CxOl3w0xPbgOUR273RdLStnVGORR50C6npfDrerh_BzX3OmoKgBHzzZytQ0ZF3jFrAKUZMBhdFBlNxvgASin0ztoQAWyJNvhI4vMF5f03FQ:1m6yJM:VZa-zvmbgmnv6nUcfy70KYUqTCW5trL9CVGc8MTKBtM	2021-08-06 16:46:08.374358+00
+495jmt2m0c16rstzd99n5cmm63tirjnu	.eJxVjDsOwjAQBe_iGlms_6akzxks73rBAeRIcVIh7o4spYD2zcx7i5T3raa985rmIi4CxOl3w0xPbgOUR273RdLStnVGORR50C6npfDrerh_BzX3OmoKgBHzzZytQ0ZF3jFrAKUZMBhdFBlNxvgASin0ztoQAWyJNvhI4vMF5f03FQ:1m91bM:-NFrywcVYk3nLv8y_UJvXn8h9s2twR7iiOWya71KZj4	2021-08-12 08:41:12.442307+00
 \.
 
 
@@ -1135,7 +1143,8 @@ COPY public.insurance_insurance_companies (id, name, image, customer_base, gener
 --
 
 COPY public.insurance_request_for_a_call (id, name, phone_number, comment, services_id, data_time) FROM stdin;
-9	Иван	12345	привет	9	2021-07-23 03:19:49.511554+04
+9	Иван	12345	привет	9	2021-07-22 23:19:49.511554+00
+11	dggfd	124455	много	10	2021-07-29 08:44:11.116783+00
 \.
 
 
@@ -1214,7 +1223,7 @@ SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 63, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 68, true);
 
 
 --
@@ -1242,7 +1251,7 @@ SELECT pg_catalog.setval('public.insurance_insurance_companies_id_seq', 10, true
 -- Name: insurance_request_for_a_call_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.insurance_request_for_a_call_id_seq', 10, true);
+SELECT pg_catalog.setval('public.insurance_request_for_a_call_id_seq', 11, true);
 
 
 --

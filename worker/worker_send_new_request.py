@@ -18,7 +18,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "project.settings")
 django.setup()
 
 
-def send_new_request(ch, method, properties, body):
+def worker(ch, method, properties, body):
 
     '''
     отправлет на email сообщение, что пришла новая заявка
@@ -43,7 +43,7 @@ channel.queue_declare(queue='send_new_request')
 
 channel.basic_consume(queue='send_new_request',
                       auto_ack=False,
-                      on_message_callback=send_new_request)
+                      on_message_callback=worker)
 
 print ( '[*] Ожидание сообщений.' )
 channel.start_consuming ()

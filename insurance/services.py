@@ -2,6 +2,9 @@ import pika
 import json
 import hashlib
 import os
+import datetime
+import time
+
 class MaintenanceServices:
     def send_new_request(self, request_info):
         '''
@@ -44,5 +47,14 @@ class MaintenanceServices:
 
         }))
 
-    def password_recovery(self, user):
-        pass
+    def password_recovery(self, **kwargs):
+        connection = pika.BlockingConnection(
+            pika.ConnectionParameters(host=os.environ["RabbitMQ_HOST"]))
+        channel = connection.channel()
+        channel.queue_declare(queue='password_recovery_queue')
+        second_time = time.time()
+        channel.basic_publish(exchange='', routing_key='password_recovery_queue', body=json.dumps({
+            "subject": kwargs.get("subject"),
+            "body": kwargs.get("body"),
+            "email":kwargs.get("email")
+        }))

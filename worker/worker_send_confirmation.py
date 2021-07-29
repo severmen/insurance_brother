@@ -15,7 +15,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "project.settings")
 django.setup()
 
 
-def send_new_request(ch, method, properties, body):
+def worker(ch, method, properties, body):
     '''
     отправлет email сообщение с сылкой для потдверждения
     '''
@@ -42,7 +42,7 @@ channel.queue_declare(queue='send_confirmation_queue')
 
 channel.basic_consume(queue='send_confirmation_queue',
                       auto_ack=False,
-                      on_message_callback=send_new_request)
+                      on_message_callback=worker)
 
 print ( '[*] Ожидание сообщений.' )
 channel.start_consuming ()

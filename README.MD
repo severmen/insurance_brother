@@ -25,6 +25,7 @@
         переходим в CLI и в папку worker
         -python worker_send_confirmation.py
         -python worker_send_new_request.py
+        -python worker_password_recovery.py
     
 
 Доступ к сайту
@@ -32,6 +33,7 @@ http://127.0.0.1:8008
 
 TO-DU
 -написать тесты
--востановление пароля
+-нормализовать кометарий и стиль кода
+-нормализовать востановление пароля
 
 

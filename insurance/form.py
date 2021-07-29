@@ -2,10 +2,10 @@ import copy
 import re
 
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordResetForm
 from django.contrib.auth.models import User, Group
 from django.forms import Textarea
-
+from django.template import loader
 
 from .models import Insurance_companies, Services, Request_for_a_call, Type_services
 from .services import MaintenanceServices
@@ -155,5 +155,24 @@ class Search_Services(forms.Form):
             return qs.order_by("-insurance_cost")
 
 
-class PasswordRecoverForm(forms.Form):
-    login = forms.CharField(label = "Логин пользователя",required=True, max_length=150)
+class MyPasswordResetForm(PasswordResetForm):
+    def send_mail(self, subject_template_name, email_template_name,
+                  context, from_email, to_email, html_email_template_name=None):
+        """
+        Send a django.core.mail.EmailMultiAlternatives to `to_email`.
+        """
+        subject = loader.render_to_string(subject_template_name, context)
+        # Email subject *must not* contain newlines
+        subject = ''.join(subject.splitlines())
+        body = loader.render_to_string(email_template_name, context)
+        #отправлем на поток
+        services = MaintenanceServices()
+        services.password_recovery(subject = subject, body = body, email = to_email)
+
+        '''
+        
+        email_message = EmailMultiAlternatives(subject, body, from_email, [to_email])
+        if html_email_template_name is not None:
+            html_email = loader.render_to_string(html_email_template_name, context)
+            email_message.attach_alternative(html_email, 'text/html')
+        '''

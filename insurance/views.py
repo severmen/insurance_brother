@@ -1,11 +1,12 @@
 import hashlib
 
 from django.contrib.auth import logout
+from django.contrib.auth.views import PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, HttpResponse, redirect
 from django.views.generic import ListView, CreateView, FormView, RedirectView
 from .models import Services
-from .form import RegisterForm,Search_Services,Request_for_a_call_Form,PasswordRecoverForm
+from .form import RegisterForm,Search_Services,Request_for_a_call_Form,MyPasswordResetForm
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -65,6 +66,7 @@ def user_logout(request):
     return redirect("/")
 
 
+'''
 class PasswordRecovery(SuccessMessageMixin, FormView):
     template_name = 'insurance/password_recover.html'
     form_class = PasswordRecoverForm
@@ -74,7 +76,8 @@ class PasswordRecovery(SuccessMessageMixin, FormView):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         try:
-            User.objects.get(username  = form.data.get("login"))
+            service = MaintenanceServices()
+            service.password_recovery(User.objects.get(username  = form.data.get("login")))
             messages.add_message(self.request, messages.INFO, 'Письмо с дальнейшей инструкцией отправлено на почту')
         except:
             self.success_url = reverse_lazy("password_recovery")
@@ -82,6 +85,7 @@ class PasswordRecovery(SuccessMessageMixin, FormView):
 
         return super().form_valid(form)
 
+'''
 class RegistrationConfirmations(RedirectView):
     '''
     потверждение регистрации
@@ -107,3 +111,7 @@ class RegistrationConfirmations(RedirectView):
         except:
             messages.add_message(self.request, messages.ERROR, 'Ссылка не действительна')
         return super().get_redirect_url(*args, **kwargs)
+
+class MyPasswordResetView(PasswordResetView):
+    form_class = MyPasswordResetForm
+

@@ -17,9 +17,12 @@
             <br>
             <a href="{% url 'logout' %}">Выйти </a>
         {% else %}
-             <a href="register">Зарегистроватся(руковидителям компаний)</a>
+             <a href="{% url 'register' %}">Зарегистроватся(руковидителям компаний)</a>
             <br>
             <a href="{% url 'admin:index' %}">Войти </a>
+              <br>
+            <a href="{% url 'password_reset' %}">Забыли пароль </a>
+
         {% endif %}
     </header>
     {% block body %}

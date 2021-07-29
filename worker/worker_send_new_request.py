@@ -19,8 +19,9 @@ django.setup()
 
 
 def send_new_request(ch, method, properties, body):
+
     '''
-    отправлет email сообщение с сылкой для потдверждения
+    отправлет на email сообщение, что пришла новая заявка
     '''
     body = json.loads(body)
     subject = "Новый отклик на ваш сервис"
@@ -33,7 +34,7 @@ def send_new_request(ch, method, properties, body):
     send_mail(subject, 
             message, EMAIL_HOST_USER, [body.get('email')], fail_silently = False)
     ch.basic_ack(delivery_tag=method.delivery_tag)
-    print("Запрос на потверждение почты получен и обработан")
+    print("Запрос на услугу получен и обработан")
 
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(os.environ["RabbitMQ_HOST"], '5672'))

@@ -44,3 +44,5 @@ class MaintenanceServices:
 
         }))
 
+    def password_recovery(self, user):
+        pass

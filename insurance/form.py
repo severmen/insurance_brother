@@ -156,4 +156,4 @@ class Search_Services(forms.Form):
 
 
 class PasswordRecoverForm(forms.Form):
-    login = forms.CharField(label = "Логин полльзователя")
+    login = forms.CharField(label = "Логин пользователя",required=True, max_length=150)

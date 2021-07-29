@@ -65,11 +65,7 @@ def user_logout(request):
     return redirect("/")
 
 
-class PasswordRecovery(FormView):
-    '''
-    ещё не работает
-    '''
-
+class PasswordRecovery(SuccessMessageMixin, FormView):
     template_name = 'insurance/password_recover.html'
     form_class = PasswordRecoverForm
     success_url = '/'
@@ -77,8 +73,13 @@ class PasswordRecovery(FormView):
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
-        #channel = pika_connect()
-        #email.send_new_request()
+        try:
+            User.objects.get(username  = form.data.get("login"))
+            messages.add_message(self.request, messages.INFO, 'Письмо с дальнейшей инструкцией отправлено на почту')
+        except:
+            self.success_url = reverse_lazy("password_recovery")
+            messages.add_message(self.request, messages.INFO, 'Пользователь не найден')
+
         return super().form_valid(form)
 
 class RegistrationConfirmations(RedirectView):

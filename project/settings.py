@@ -32,8 +32,8 @@ SECRET_KEY = 'django-insecure-()^efh(hhx@49g(^t^j#s1^&!xw1@c$^yx9$-o)tmu3em$mb&t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-os.environ["URL_AT_THE_MOMENT"] = "http://localhost:8008"
-os.environ["RabbitMQ_HOST"] = "host.docker.internal"
+os.environ["URL_AT_THE_MOMENT"] = "http://localhost:8000"
+os.environ["RabbitMQ_HOST"] = "localhost"
 ALLOWED_HOSTS = ['127.0.0.1', 'insurance-brother.herokuapp.com', 'localhost']
 
 

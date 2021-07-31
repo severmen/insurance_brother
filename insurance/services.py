@@ -2,13 +2,12 @@ import pika
 import json
 import hashlib
 import os
-import datetime
 import time
 
 class MaintenanceServices:
     def send_new_request(self, request_info):
         '''
-        Функция отправлет сообщение в очередь
+        Функция отправляет сообщение в очередь
         для отправки на почту сообщения о новом запросе
         '''
         connection = pika.BlockingConnection(
@@ -30,8 +29,8 @@ class MaintenanceServices:
 
     def send_confirmation(self, new_user):
         '''
-        Функция отправлет сообщение в очередь
-        для потдтверждения регистрации
+        Функция отравляет сообщение в очередь
+        для подтверждения регистрации
         '''
         connection = pika.BlockingConnection(
             pika.ConnectionParameters(host=os.environ["RabbitMQ_HOST"]))
@@ -48,6 +47,10 @@ class MaintenanceServices:
         }))
 
     def password_recovery(self, **kwargs):
+        '''
+        Функция отравляет сообщение в очередь
+        для востановления пароля
+        '''
         connection = pika.BlockingConnection(
             pika.ConnectionParameters(host=os.environ["RabbitMQ_HOST"]))
         channel = connection.channel()

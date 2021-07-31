@@ -66,26 +66,6 @@ def user_logout(request):
     return redirect("/")
 
 
-'''
-class PasswordRecovery(SuccessMessageMixin, FormView):
-    template_name = 'insurance/password_recover.html'
-    form_class = PasswordRecoverForm
-    success_url = '/'
-
-    def form_valid(self, form):
-        # This method is called when valid form data has been POSTed.
-        # It should return an HttpResponse.
-        try:
-            service = MaintenanceServices()
-            service.password_recovery(User.objects.get(username  = form.data.get("login")))
-            messages.add_message(self.request, messages.INFO, 'Письмо с дальнейшей инструкцией отправлено на почту')
-        except:
-            self.success_url = reverse_lazy("password_recovery")
-            messages.add_message(self.request, messages.INFO, 'Пользователь не найден')
-
-        return super().form_valid(form)
-
-'''
 class RegistrationConfirmations(RedirectView):
     '''
     потверждение регистрации
@@ -112,6 +92,14 @@ class RegistrationConfirmations(RedirectView):
             messages.add_message(self.request, messages.ERROR, 'Ссылка не действительна')
         return super().get_redirect_url(*args, **kwargs)
 
-class MyPasswordResetView(PasswordResetView):
+class MyPasswordResetView(SuccessMessageMixin, PasswordResetView):
+    """
+    востановление пароля
+    """
     form_class = MyPasswordResetForm
+    success_url = reverse_lazy('main_insurance')
+    success_message = "Мы отправили вам инструкцию по установке нового пароля на указанный адрес "\
+                       + "электронной почты (если в нашей базе данных есть такой адрес). Вы должны "\
+                       +"получить ее в ближайшее время"
+
 

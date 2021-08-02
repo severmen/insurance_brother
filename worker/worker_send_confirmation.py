@@ -1,3 +1,4 @@
+import datetime
 import pika
 import json
 import os
@@ -33,7 +34,7 @@ def worker(ch, method, properties, body):
               fail_silently=False,
               )
     ch.basic_ack(delivery_tag=method.delivery_tag)
-    print("Запрос на потверждение почты получен и обработан")
+    print("Запрос на потверждение почты получен и обработан "+str(datetime.datetime.now()))
 
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(os.environ["RabbitMQ_HOST"], '5672'))

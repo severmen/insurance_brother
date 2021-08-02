@@ -84,7 +84,8 @@ class Request_for_a_call_Form(forms.Form):
                                          services = Services.objects.get(id = int(self.data.get('id'))),
                                          comment = self.data.get('comment'))
         one_request.save()
-        MaintenanceServices.send_new_request(self, one_request)
+        service = MaintenanceServices()
+        service.send_new_request(one_request)
         services = MaintenanceServices()
 
 

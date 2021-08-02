@@ -3,6 +3,7 @@ import json
 import os
 import django
 import sys
+import datetime
 
 from django.core.mail import send_mail
 
@@ -34,7 +35,7 @@ def worker(ch, method, properties, body):
     send_mail(subject, 
             message, EMAIL_HOST_USER, [body.get('email')], fail_silently = False)
     ch.basic_ack(delivery_tag=method.delivery_tag)
-    print("Запрос на услугу получен и обработан")
+    print("Запрос на услугу получен и обработан "+str(datetime.datetime.now()))
 
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(os.environ["RabbitMQ_HOST"], '5672'))

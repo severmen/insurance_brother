@@ -3,6 +3,7 @@ import json
 import os
 import django
 import sys
+import datetime
 
 from django.core.mail import send_mail
 
@@ -19,14 +20,14 @@ def worker(ch, method, properties, body):
     '''
     '''
     body = json.loads(body)
-    send_mail(subject = body.get("subject"),
-              message = body.get("body"),
-              from_email = EMAIL_HOST_USER,
-              recipient_list= [body.get('email')],
+    send_mail(subject=body.get("subject"),
+              message=body.get("body"),
+              from_email=EMAIL_HOST_USER,
+              recipient_list=[body.get('email')],
               fail_silently=False,
               )
     ch.basic_ack(delivery_tag=method.delivery_tag)
-    print("Сообшение для сменя пароля отправлено")
+    print("Сообшение для сменя пароля отправлено "+str(datetime.datetime.now()))
 
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(os.environ["RabbitMQ_HOST"], '5672'))

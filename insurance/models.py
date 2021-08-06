@@ -3,11 +3,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
-
 # Create your models here.
-
-
-
 
 class Insurance_companies(models.Model):
     RATING_CHOICES = (
@@ -75,6 +71,7 @@ class Insurance_companies(models.Model):
 
 
 
+
 class Services(models.Model):
     insurance_companies = models.ForeignKey('Insurance_companies', on_delete=models.CASCADE)
     type_services = models.ForeignKey('Type_services', on_delete=models.CASCADE)
@@ -91,6 +88,9 @@ class Services(models.Model):
 
     def __str__(self):
         return self.name
+
+
+
 class Type_services(models.Model):
     name = models.CharField(max_length=200, verbose_name="Тип страхования")
 

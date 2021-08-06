@@ -1,0 +1,13 @@
+{% extends 'insurance/base.html' %}
+{% block title %}
+Поиск
+{% endblock %}
+
+{% block body %}
+    <h1 align="center">Текстовой поиск с использованием elasticsearch</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Искать">
+    </form>
+{% endblock %}

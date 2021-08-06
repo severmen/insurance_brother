@@ -32,8 +32,9 @@ SECRET_KEY = 'django-insecure-()^efh(hhx@49g(^t^j#s1^&!xw1@c$^yx9$-o)tmu3em$mb&t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-os.environ["URL_AT_THE_MOMENT"] = "http://localhost:8000"
-os.environ["RabbitMQ_HOST"] = "localhost"
+os.environ["URL_AT_THE_MOMENT"] = "http://localhost:8008"
+os.environ["RabbitMQ_HOST"] = "host.docker.internal"
+os.environ["Elasticsearch_HOST"] = "host.docker.internal"
 ALLOWED_HOSTS = ['127.0.0.1', 'insurance-brother.herokuapp.com', 'localhost']
 
 
@@ -47,6 +48,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'psycopg2',
+    'rest_framework',
+    'django_elasticsearch_dsl',
+    'django_elasticsearch_dsl_drf',
     'insurance',
     'ckeditor',
     'ckeditor_uploader',
@@ -149,6 +153,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+####################################
+##  ELASTICSEARCH CONFIGURATION ##
+####################################
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'localhost:9200'
+    },
+}
 
 
 ####################################

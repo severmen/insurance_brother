@@ -1,5 +1,7 @@
-import copy
+import os
 import re
+
+from elasticsearch import Elasticsearch
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordResetForm
@@ -93,6 +95,7 @@ class Search_Services(forms.Form):
     '''
     Форма для работы с поиском
     '''
+
     def add_the_all_field_for_selection( list_of_elections):
         '''
         Фукция добовляет в начало списка выбора  "Все"
@@ -112,48 +115,132 @@ class Search_Services(forms.Form):
 
     price = forms.ChoiceField(label = "Сортировка по цене страхования",
                                      choices = [("по возрастанию", "по возрастанию"), ("по убыванию", "по убыванию")])
+    text = forms.CharField(label="Поиск по имени услуги и описании", required=False)
 
     class Meta:
         model = Services
         fields = ('insurance_companies','description','insurance_cost', 'amount_of_payments',"terms_of_insurance",)
 
-    def filter(self, qs, ):
+    def filter(self, qs):
         '''
         Фильтрация по параметрам для главной страницы
         '''
-        #тип
-        try:
-            if self.data.get('type') != 'Все':
-                qs = qs.filter(type_services = Type_services.objects.get(name = self.data.get('type')))
-        except Exception:
-            pass
+
+
+        def query_constructor():
+            '''
+            формирует тело запроса для elastik search
+            '''
+            result = {"must": [
+
+                    ]
+            }
+            must = result.get("must")
+            #тип сервиса
+            if not(self.data.get('type') in [None, "", "Все"]):
+                must.append({"match":{
+								"type_service":{
+									"query":self.data.get('type'),
+									"operator":"and"
+								}
+							}
+                         })
+            # экспертный рейтинг
+            if not (self.data.get('rating') in [None, "", "Все"]):
+                must.append({"match": {
+                    "expert_rating": {
+                        "query": self.data.get('rating')
+                    }
+                }
+                })
+            # клиентская база
+            if not (self.data.get('customer_base') in [None, "", 0, "0"]):
+                must.append({"range": {
+                    "customer_base": {
+                        "gte": self.data.get('customer_base')
+                    }
+                }
+                })
+            # слова
+            if not (self.data.get('text') in [None, ""]):
+                must.append({"multi_match": {
+                    "query": self.data.get('text') ,
+                    "fields": ["name", "description"],
+                    "type": "best_fields",
+                    "operator": "and"
+                        }
+                    })
+
+
+            return result
+
+
+        def Elasticsearch_seacrh():
+            '''
+            функция выполняет  запрос на Elasticsearch для быстрого поиска
+            потом по id-шникам формирует QuerySet и сортирует его
+            '''
+            nonlocal self
+            nonlocal qs
+            es = Elasticsearch([{'host': os.environ["Elasticsearch_HOST"], 'port': 9200}])
+            query_es = es.search(index='services', body=  {"query": {
+                                                    "bool":  query_constructor()
+                                                } })
+            qs = qs.none()
+            for result in query_es["hits"]["hits"]:
+                qs = qs | Services.objects.filter(id=result.get("_id"))
+
+            #сортировка
+            if self.data.get('price') == "по убыванию":
+                return qs.order_by("-insurance_cost")
+            else:
+                return qs.order_by("insurance_cost")
+
+        ############################
+        ### потом уберу старый код #
+        ############################
+        '''
         #экспертный рейтинг
-        try:
-            if self.data.get('rating') != 'Все' and self.data.get('rating') != None:
-                all_companies = Insurance_companies.objects.filter(expert_rating = self.data.get('rating'))
-                for id, one_filter_qs in enumerate(copy.copy(qs)):
+        def rating():
+            nonlocal self
+            nonlocal qs
+            try:
+                if self.data.get('rating') != 'Все' and self.data.get('rating') != None:
+                    all_companies = Insurance_companies.objects.filter(expert_rating = self.data.get('rating'))
+                    for id, one_filter_qs in enumerate(copy.copy(qs)):
+                        if id == 0:
+                            qs = qs.none()
+                        x = (True for x in all_companies if one_filter_qs.insurance_companies == x)
+                        if next(x,None) == True:
+                            qs = qs | Services.objects.filter(id = one_filter_qs.id)
+            except Exception as E:
+                pass
+
+        # клинеская база
+        def base():
+            nonlocal self
+            nonlocal qs
+            if self.data.get('customer_base') != None and  self.data.get('customer_base') != "":
+                number = int(self.data.get('customer_base'))
+                sorted_base = list((x for x in copy.copy(qs) if x.insurance_companies.customer_base > number))
+                for id, one_good_qs in enumerate(sorted_base):
                     if id == 0:
-                        qs = qs.none()
-                    x = (True for x in all_companies if one_filter_qs.insurance_companies == x)
-                    if next(x,None) == True:
-                        qs = qs | Services.objects.filter(id = one_filter_qs.id)
-        except Exception as E:
-            pass
-        #клинеская база
-        if self.data.get('customer_base') != None and  self.data.get('customer_base') != "":
-            number = int(self.data.get('customer_base'))
-            sorted_base = list((x for x in copy.copy(qs) if x.insurance_companies.customer_base > number))
-            for id, one_good_qs in enumerate(sorted_base):
-                if id == 0:
-                    qs = qs.filter(id=-1)
-                qs = qs | Services.objects.filter(id = one_good_qs.id)
-            if len(sorted_base) == 0:
-                qs = qs.filter(id=-1)
+                        qs = qs.filter(id=-1)
+                    qs = qs | Services.objects.filter(id = one_good_qs.id)
+                if len(sorted_base) == 0:
+                    qs = qs.none()
+
         #сортировка
-        if self.data.get('price') == "по возрастанию":
-            return qs.order_by("insurance_cost")
-        else:
-            return qs.order_by("-insurance_cost")
+        def sortirovka():
+            nonlocal self
+            nonlocal qs
+            if self.data.get('price') == "по возрастанию":
+                return qs.order_by("insurance_cost")
+            else:
+                return qs.order_by("-insurance_cost")
+        
+        '''
+        return Elasticsearch_seacrh()
 
 
 class MyPasswordResetForm(PasswordResetForm):
@@ -169,3 +256,6 @@ class MyPasswordResetForm(PasswordResetForm):
         #отправлем на поток
         services = MaintenanceServices()
         services.password_recovery(subject = subject, body = body, email = to_email)
+
+class ElasticSearchForm(forms.Form):
+    name = forms.CharField(label = "",required=True, max_length=350)

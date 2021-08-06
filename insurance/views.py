@@ -1,18 +1,24 @@
-import hashlib
-
 from django.contrib.auth import logout
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render, HttpResponse, redirect
-from django.views.generic import ListView, CreateView, FormView, RedirectView
+from django.shortcuts import HttpResponse, redirect
+from django.views.generic import (
+    ListView,
+    CreateView,
+)
+
 from .models import Services
-from .form import RegisterForm,Search_Services,Request_for_a_call_Form,MyPasswordResetForm
+from .form import (RegisterForm,
+                   Search_Services,
+                   Request_for_a_call_Form,
+                   MyPasswordResetForm,
+                   ElasticSearchForm,)
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib import messages
 from django.urls import reverse_lazy
+
+# импорты не которые не нуужны в view, но используються в проекте!
 from .templates_filter import get_next_url
-from .services import MaintenanceServices
-from django.contrib.auth.models import User
+from .signals import *
 
 
 class Main(ListView):
@@ -22,7 +28,7 @@ class Main(ListView):
     model = Services
     template_name = 'insurance/index.html'
     context_object_name = 'Services'
-    paginate_by = 2
+    paginate_by = 4
 
     def get_queryset(self):
         '''
@@ -66,31 +72,6 @@ def user_logout(request):
     return redirect("/")
 
 
-class RegistrationConfirmations(RedirectView):
-    '''
-    потверждение регистрации
-    '''
-    url = reverse_lazy('admin:index')
-    def get_redirect_url(self, *args, **kwargs):
-        '''
-        функция проверет правильность и актуальность URL адреса потверждения
-        формирует сообщение о статусе
-        '''
-        try:
-            one_user_info = User.objects.get(id = args[0],is_staff = False)
-            if one_user_info.is_staff == True:
-                raise Exception()
-            hash = hashlib.sha1(
-                (str(one_user_info.id) + one_user_info.first_name + one_user_info.password).encode('utf-8')).hexdigest()
-            if hash == args[1]:
-                one_user_info.is_staff = True
-                one_user_info.save()
-
-            messages.add_message(self.request, messages.INFO, 'Пользователь успешно активирован')
-
-        except:
-            messages.add_message(self.request, messages.ERROR, 'Ссылка не действительна')
-        return super().get_redirect_url(*args, **kwargs)
 
 class MyPasswordResetView(SuccessMessageMixin, PasswordResetView):
     """

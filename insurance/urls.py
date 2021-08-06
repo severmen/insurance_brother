@@ -11,11 +11,14 @@ urlpatterns = []
 urlpatterns += staticfiles_urlpatterns()
 urlpatterns = [
     path("", Main.as_view(), name = "main_insurance"),
+
     path('password_reset/', MyPasswordResetView.as_view(), name='password_reset'),
     path('reset/<uidb64>/<token>/', views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+
     path("add_request_for_a_call/", add_request_for_a_call),
+
     path("register/", Register.as_view(), name = "register"),
     path("logout/", user_logout, name="logout"),
-    path(r"registration_confirmations/([0-9]{1,10})/(.{10,160})",RegistrationConfirmations.as_view(),)
+    path("search/", Search.as_view(),name = "search" ),
 ]

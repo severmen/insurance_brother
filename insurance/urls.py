@@ -20,5 +20,4 @@ urlpatterns = [
 
     path("register/", Register.as_view(), name = "register"),
     path("logout/", user_logout, name="logout"),
-    path("search/", Search.as_view(),name = "search" ),
 ]

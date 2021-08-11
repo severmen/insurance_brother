@@ -17,3 +17,5 @@ function add_request_for_a_call(id_insurance_companies){
             });
 
         }
+
+

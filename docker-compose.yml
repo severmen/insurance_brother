@@ -3,9 +3,6 @@ services:
         build: ./
         command:
             gunicorn --bind 0.0.0.0:8008 project.wsgi:application --reload
-
-
-
         volumes:
             - ./:/usr/src/app/
         ports:

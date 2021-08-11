@@ -11,6 +11,8 @@ urlpatterns = []
 urlpatterns += staticfiles_urlpatterns()
 urlpatterns = [
     path("", Main.as_view(), name = "main_insurance"),
+    path('about/<int:pk>/',  AboutServices.as_view(), name='service-detail'),
+    path('comment/<int:pk>/',  ServiceComment.as_view(), name='service-comment'),
 
     path('password_reset/', MyPasswordResetView.as_view(), name='password_reset'),
     path('reset/<uidb64>/<token>/', views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),

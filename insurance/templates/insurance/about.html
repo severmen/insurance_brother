@@ -1,0 +1,20 @@
+{% extends 'insurance/base.html' %}
+{% block title %}Подробнее об услуге {{ service.name }} {% endblock %}
+{% block body %}
+    <h1 align="center">Подробнее об услуге {{ service.name|lower }} </h1>
+    <p>Компания {{ service.insurance_companies.name }}</p>
+    <p>Полное описание услуги {{ service.description|safe }}</p>
+    <p>Стоймость страхования от в рублях {{ service.insurance_cost }}</p>
+    <p>Сумма выплат до {{ service.amount_of_payments }}</p>
+    <p>Сроки страхования {{ service.terms_of_insurance }}</p>
+    <input type="button" onclick="add_request_for_a_call({{ service.id }})" value="Записаться">
+    <h2 align="center">Оставить комментарий</h2>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Оставить комментарий">
+    </form>
+    <h2 align="center">Коментарии</h2>
+    <iframe src="{% url 'service-comment' service.id  %}" scrolling = "no"  frameBorder="0" width="100%" height="340px" ></iframe>
+
+{% endblock %}

@@ -24,15 +24,23 @@
     Запуск RabbitMQ
         -docker-compose build
         -docker-compose up
+        Далее необходимо запустить CLI приложение и создать пользователя
+        -rabbitmqctl add_user username password
+        -rabbitmqctl set_user_tags username administrator
+        -rabbitmqctl set_permissions -p / username ".*" ".*" ".*"
+    Запуск MongoDB
+        -docker-compose build
+        -docker-compose up
     Сборка приложения и запуск воркеров
         -docker-compose build
         -docker-compose up
+		Для индексирования и CLI переходим в папку script
+        -python *
         Для запуска воркеров переходим в CLI и в папку worker
         -python worker_send_confirmation.py
         -python worker_send_new_request.py
         -python worker_password_recovery.py
-        Для индексирования переходим в папку script
-        -python *
+        
 
 
 Доступ к сайту

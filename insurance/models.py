@@ -65,9 +65,7 @@ class Insurance_companies(models.Model):
         result += str(age_mount%12)+" мес. "
         return result
 
-    @staticmethod
-    def get_user(self):
-        self.save()
+
 
 
 
@@ -90,7 +88,20 @@ class Services(models.Model):
         return self.name
 
 
+class CommentService(models.Model):
+    services = models.ForeignKey('Services', on_delete=models.CASCADE, verbose_name="Услуга")
+    name = models.CharField(max_length=400, verbose_name="Имя")
+    email = models.EmailField(max_length=400, verbose_name="Email")
+    comment = models.CharField(max_length=400, verbose_name="Коментарий")
+    date_of_creation = models.DateTimeField(verbose_name="Дата и время создания комментария", default=datetime.now)
 
+    class Meta:
+        verbose_name_plural = 'комментарии'
+        verbose_name = 'коментрий'
+        ordering = ['-date_of_creation']
+
+    def __str__(self):
+        return self.comment
 class Type_services(models.Model):
     name = models.CharField(max_length=200, verbose_name="Тип страхования")
 

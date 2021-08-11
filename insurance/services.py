@@ -6,9 +6,15 @@ import time
 
 class MaintenanceServices:
     def __init__(self):
+        '''
+        создаём подключение чтобы, потом использовать бролкер сообщений
+        '''
+        credentials = pika.PlainCredentials(os.environ["RabbitMQ_USERNAME"], os.environ["RabbitMQ_PASSWORD"])
         connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host=os.environ["RabbitMQ_HOST"]))
+            pika.ConnectionParameters(host=os.environ["RabbitMQ_HOST"],
+                                      credentials=credentials))
         self.channel = connection.channel()
+
     def send_new_request(self, request_info):
         '''
         Функция отправляет сообщение в очередь

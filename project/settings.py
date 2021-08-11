@@ -11,9 +11,11 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 
-from pathlib import Path
 import configparser
 import os
+import pika
+
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,8 +36,18 @@ DEBUG = True
 
 os.environ["URL_AT_THE_MOMENT"] = "http://localhost:8008"
 os.environ["RabbitMQ_HOST"] = "host.docker.internal"
+os.environ["RabbitMQ_USERNAME"] = "username"
+os.environ["RabbitMQ_PASSWORD"] = "password"
+
+os.environ["MongoDB_HOST"] = "host.docker.internal"
+os.environ["MongoDB_USERNAME"] = "root"
+os.environ["MongoDB_PASSWORD"] = "example"
+
 os.environ["Elasticsearch_HOST"] = "host.docker.internal"
-ALLOWED_HOSTS = ['127.0.0.1', 'insurance-brother.herokuapp.com', 'localhost']
+
+
+
+ALLOWED_HOSTS = ['127.0.0.1', 'insurance-brother.herokuapp.com', 'localhost','192.168.43.60']
 
 
 # Application definition
@@ -49,8 +61,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'psycopg2',
     'rest_framework',
-    'django_elasticsearch_dsl',
-    'django_elasticsearch_dsl_drf',
     'insurance',
     'ckeditor',
     'ckeditor_uploader',
@@ -99,9 +109,32 @@ DATABASES = {
         'PASSWORD':configParser.get('config_DB', 'PASSWORD_DB'),
         'HOST':configParser.get('config_DB', 'HOST_DB'),
         'PORT':configParser.get('config_DB', 'PORT'),
-    }
+    },
+    #  'users': {
+    #         'ENGINE': 'djongo',
+    #         'NAME': 'statistics',
+    #         'ENFORCE_SCHEMA': False,
+    #         'CLIENT': {
+    #             'host': 'localhost:27017'
+    #         }
+    #     }
 }
 
+####################################
+##  MONGO_DB CONFIGURATION ##
+####################################
+import pymongo
+
+db_client = pymongo.MongoClient(host=os.environ["MongoDB_HOST"],
+                                port=27017,
+                                username= os.environ["MongoDB_USERNAME"],
+                                password= os.environ["MongoDB_PASSWORD"])
+
+current_DB = db_client["statistics"]
+
+collection_mongoDB_statistics_serivice = current_DB["serivice"]
+
+###########################################
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -153,14 +186,23 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 ####################################
-##  ELASTICSEARCH CONFIGURATION ##
+##  X FRAME CONFIGURATION #########
 ####################################
-ELASTICSEARCH_DSL = {
-    'default': {
-        'hosts': 'localhost:9200'
-    },
-}
+X_FRAME_OPTIONS = 'ALLOWALL'
+
+XS_SHARING_ALLOWED_METHODS = ['POST','GET',]
+
+
+####################################
+##  RABBITMQ CONFIGURATION ###
+####################################
+credentials = pika.PlainCredentials(os.environ["RabbitMQ_USERNAME"], os.environ["RabbitMQ_PASSWORD"])
+connection = pika.BlockingConnection(
+            pika.ConnectionParameters(host=os.environ["RabbitMQ_HOST"],
+                                      credentials=credentials))
+pika_channel = connection.channel()
 
 
 ####################################

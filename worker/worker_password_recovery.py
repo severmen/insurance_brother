@@ -11,6 +11,7 @@ sys.path.insert(1, os.getcwd()+"/..")
 os.chdir(os.getcwd()+"/..")
 
 from project.settings import EMAIL_HOST_USER
+from project.settings import pika_channel as channel
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "project.settings")
 django.setup()
@@ -30,8 +31,6 @@ def worker(ch, method, properties, body):
     print("Сообшение для сменя пароля отправлено "+str(datetime.datetime.now()))
 
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(os.environ["RabbitMQ_HOST"], '5672'))
-channel = connection.channel()
 channel.queue_declare(queue='password_recovery_queue')
 
 channel.basic_consume(queue='password_recovery_queue',

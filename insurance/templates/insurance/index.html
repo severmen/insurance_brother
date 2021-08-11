@@ -41,7 +41,7 @@
                     <i>Сумма выплат до</i> {{ service.amount_of_payments}} рублей
                     <br>
                     <i>Сроки страхования </i> {{ service.terms_of_insurance}}
-                    <input type="button" onclick="add_request_for_a_call({{ service.id }})" value="Записаться">
+                    <a href="{% url 'service-detail'  service.id %}">Подробнее</a>
 
 
                 </div>

@@ -1,18 +1,23 @@
+from project.settings import *
 from django.contrib.auth import logout
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import HttpResponse, redirect
+from django.shortcuts import HttpResponse, redirect, get_object_or_404
 from django.views.generic import (
     ListView,
     CreateView,
+    DetailView,
+    FormView
 )
+from project.settings import collection_mongoDB_statistics_serivice
 
-from .models import Services
+from .models import (Services,
+                    CommentService,)
 from .form import (RegisterForm,
                    Search_Services,
                    Request_for_a_call_Form,
                    MyPasswordResetForm,
-                   ElasticSearchForm,)
+                   CommentForm,)
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
 
@@ -83,4 +88,42 @@ class MyPasswordResetView(SuccessMessageMixin, PasswordResetView):
                        + "электронной почты (если в нашей базе данных есть такой адрес). Вы должны "\
                        +"получить ее в ближайшее время"
 
+class AboutServices(DetailView,FormView):
+    model = Services
+    template_name = 'insurance/about.html'
+    context_object_name = "service"
+    form_class = CommentForm
+    success_url = "#"
+
+    def get_object(self):
+        #
+        query = get_object_or_404(Services, id=self.kwargs.get('pk'))
+        if collection_mongoDB_statistics_serivice.count_documents({"id":self.kwargs.get('pk')}) == 0:
+            #создаём индекс
+            index = {
+                "id": self.kwargs.get('pk'),
+                "count": 0
+            }
+            collection_mongoDB_statistics_serivice.insert_one(index)
+        else:
+            collection_mongoDB_statistics_serivice.update_one({"id":self.kwargs.get('pk')},
+                                                              {'$inc':{'count':1}})
+        return query
+
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        form.save(self.request.POST, self.kwargs.get('pk'))
+        return super().form_valid(form)
+
+
+
+class ServiceComment(ListView):
+    model = CommentService
+    template_name = 'insurance/comment.html'
+    paginate_by = 2
+    context_object_name = 'comment'
+
+    def get_queryset(self):
+        return CommentService.objects.filter(services=Services.objects.get(id = self.kwargs.get('pk')))
 

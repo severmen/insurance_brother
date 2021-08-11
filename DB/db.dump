@@ -649,6 +649,43 @@ CREATE TABLE public.django_session (
 ALTER TABLE public.django_session OWNER TO admin;
 
 --
+-- Name: insurance_commentservice; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.insurance_commentservice (
+    id bigint NOT NULL,
+    name character varying(400) NOT NULL,
+    email character varying(400) NOT NULL,
+    comment character varying(400) NOT NULL,
+    date_of_creation timestamp with time zone NOT NULL,
+    services_id bigint NOT NULL
+);
+
+
+ALTER TABLE public.insurance_commentservice OWNER TO admin;
+
+--
+-- Name: insurance_commentservice_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.insurance_commentservice_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.insurance_commentservice_id_seq OWNER TO admin;
+
+--
+-- Name: insurance_commentservice_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.insurance_commentservice_id_seq OWNED BY public.insurance_commentservice.id;
+
+
+--
 -- Name: insurance_insurance_companies; Type: TABLE; Schema: public; Owner: admin
 --
 
@@ -860,6 +897,13 @@ ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('p
 
 
 --
+-- Name: insurance_commentservice id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.insurance_commentservice ALTER COLUMN id SET DEFAULT nextval('public.insurance_commentservice_id_seq'::regclass);
+
+
+--
 -- Name: insurance_insurance_companies id; Type: DEFAULT; Schema: public; Owner: admin
 --
 
@@ -911,6 +955,7 @@ COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
 13	1	35
 14	1	36
 15	1	34
+16	1	44
 \.
 
 
@@ -959,6 +1004,10 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 38	Can change request_for_a_call	10	change_request_for_a_call
 39	Can delete request_for_a_call	10	delete_request_for_a_call
 40	Can view request_for_a_call	10	view_request_for_a_call
+41	Can add comment service	11	add_commentservice
+42	Can change comment service	11	change_commentservice
+43	Can delete comment service	11	delete_commentservice
+44	Can view comment service	11	view_commentservice
 \.
 
 
@@ -967,10 +1016,10 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 --
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-1	pbkdf2_sha256$260000$idBzBdsNlkdEAiiNJXvF3e$Lzc/CDxqE7A8hzcIktTdOiwJXo67lyeV/GTfffLxnyU=	2021-07-29 08:41:12.432101+00	t	admin				t	t	2021-07-12 16:13:59+00
 11	pbkdf2_sha256$260000$XgiQSnDnVDs9C1ZeHcLQjm$8dZduHkk1yVi117Q7DQjTyncdDs8H6yJ66zoDcNQjYs=	2021-07-22 06:13:13+00	f	alliance	Филлип	Гронемайер	Alliance_Insurance@rambler.ru	t	t	2021-07-21 10:33:54+00
-8	pbkdf2_sha256$260000$HVRqqgud2da9l5mOJZW21C$WkNTjd1Eg8Qgs9yVpeq4e2mAzF1n4bWoQMcS+FHr+nQ=	2021-07-22 06:30:34+00	f	Alfastrakhovanie	Альфа	Альфов	alfastrakhovanie1@rambler.ru	t	t	2021-07-20 16:05:02+00
-7	pbkdf2_sha256$260000$WnHOMaZ9MCgF7BlvWT9UKq$re5QRDEewI8cktbR8znDeoHeynT75qUlehk1Wigqfxs=	2021-07-23 12:27:02+00	f	rosgosstrakh	Геннадий	Гальперин	rozgostrahrohgostrahovaic@gmail.com	t	t	2021-07-20 12:22:10+00
+1	pbkdf2_sha256$260000$idBzBdsNlkdEAiiNJXvF3e$Lzc/CDxqE7A8hzcIktTdOiwJXo67lyeV/GTfffLxnyU=	2021-08-11 12:24:00.572195+00	t	admin			severmen18@gmail.com	t	t	2021-07-12 16:13:59+00
+7	pbkdf2_sha256$260000$WnHOMaZ9MCgF7BlvWT9UKq$re5QRDEewI8cktbR8znDeoHeynT75qUlehk1Wigqfxs=	2021-08-11 17:53:29.903249+00	f	rosgosstrakh	Геннадий	Гальперин	rozgostrahrohgostrahovaic@gmail.com	t	t	2021-07-20 12:22:10+00
+8	pbkdf2_sha256$260000$HVRqqgud2da9l5mOJZW21C$WkNTjd1Eg8Qgs9yVpeq4e2mAzF1n4bWoQMcS+FHr+nQ=	2021-08-11 18:15:33.483221+00	f	Alfastrakhovanie	Альфа	Альфов	alfastrakhovanie1@rambler.ru	t	t	2021-07-20 16:05:02+00
 \.
 
 
@@ -1055,6 +1104,19 @@ COPY public.django_admin_log (id, action_time, object_id, object_repr, action_fl
 66	2021-07-29 08:42:58.779981+00	11	alliance	2	[]	4	1
 67	2021-07-29 08:43:41.460907+00	8	Alfastrakhovanie	2	[{"changed": {"fields": ["Email address"]}}]	4	1
 68	2021-07-29 08:43:59.486762+00	7	rosgosstrakh	2	[{"changed": {"fields": ["Email address"]}}]	4	1
+69	2021-08-11 17:25:25.282139+00	12	21:23 время	3		11	1
+70	2021-08-11 17:25:25.29915+00	11	21:17 время	3		11	1
+71	2021-08-11 17:25:25.305144+00	10	выавы	3		11	1
+72	2021-08-11 17:25:25.310144+00	9	<script>alert("attak");</script>	3		11	1
+73	2021-08-11 17:25:25.31514+00	8	safsdfdsfffsafsdfdsfffsafsdfdsfffsafsdfdsfffsafsdfdsfffsafsdfdsfff	3		11	1
+74	2021-08-11 17:25:25.321143+00	7	dsf	3		11	1
+75	2021-08-11 17:25:25.326137+00	6	dsgfd	3		11	1
+76	2021-08-11 17:25:25.331143+00	5	dfcdfds	3		11	1
+77	2021-08-11 17:25:25.3363+00	4	ds	3		11	1
+78	2021-08-11 17:25:25.341303+00	3	dsfd	3		11	1
+79	2021-08-11 17:25:25.346299+00	2	sadsa	3		11	1
+80	2021-08-11 17:37:04.462912+00	13	первый комментарий	3		11	1
+81	2021-08-11 17:51:13.934705+00	1	Руководители страховых компаний	2	[{"changed": {"fields": ["Permissions"]}}]	3	1
 \.
 
 
@@ -1073,6 +1135,7 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 8	insurance	type_services
 9	insurance	services
 10	insurance	request_for_a_call
+11	insurance	commentservice
 \.
 
 
@@ -1109,6 +1172,8 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 26	insurance	0008_insurance_companies_medaltype	2021-07-24 06:22:04.888431+00
 27	insurance	0009_auto_20210724_1027	2021-07-24 06:27:27.830872+00
 28	insurance	0010_alter_insurance_companies_expert_rating	2021-07-24 07:13:22.50914+00
+29	insurance	0011_commentservice	2021-08-11 12:20:24.190105+00
+30	insurance	0012_auto_20210811_2124	2021-08-11 17:24:26.220755+00
 \.
 
 
@@ -1124,6 +1189,18 @@ i055ads0dnf6f66bkn09uwz32dnpw1dt	.eJxVjDsOwjAQBe_iGlms_6akzxks73rBAeRIcVIh7o4spY
 m0jobq3dw6ks4v0rx07w2t3m6jxkx7j5	.eJxVjEEOwiAQRe_C2hCgMIBL9z0DYWZQqoYmpV0Z765NutDtf-_9l0h5W2vaelnSxOIsvDj9bpjpUdoO-J7bbZY0t3WZUO6KPGiX48zleTncv4Oae_3WFryzoFRBwqwi6xICDBqj9zEYVH5gpBCN9YZNVOAArwysiTQEsk68P8ZONyY:1m6atX:7087kE0J20wU9Q3GVE5FEOtm9fEWPuXanAu49Fc00UE	2021-08-05 15:45:55.740269+00
 qd9x4kruved5be72ivsyd9nvn8kf50qx	.eJxVjDsOwjAQBe_iGlms_6akzxks73rBAeRIcVIh7o4spYD2zcx7i5T3raa985rmIi4CxOl3w0xPbgOUR273RdLStnVGORR50C6npfDrerh_BzX3OmoKgBHzzZytQ0ZF3jFrAKUZMBhdFBlNxvgASin0ztoQAWyJNvhI4vMF5f03FQ:1m6yJM:VZa-zvmbgmnv6nUcfy70KYUqTCW5trL9CVGc8MTKBtM	2021-08-06 16:46:08.374358+00
 495jmt2m0c16rstzd99n5cmm63tirjnu	.eJxVjDsOwjAQBe_iGlms_6akzxks73rBAeRIcVIh7o4spYD2zcx7i5T3raa985rmIi4CxOl3w0xPbgOUR273RdLStnVGORR50C6npfDrerh_BzX3OmoKgBHzzZytQ0ZF3jFrAKUZMBhdFBlNxvgASin0ztoQAWyJNvhI4vMF5f03FQ:1m91bM:-NFrywcVYk3nLv8y_UJvXn8h9s2twR7iiOWya71KZj4	2021-08-12 08:41:12.442307+00
+\.
+
+
+--
+-- Data for Name: insurance_commentservice; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.insurance_commentservice (id, name, email, comment, date_of_creation, services_id) FROM stdin;
+14	Иван	ivanov@ivan.ru	ПЕрвый комментарий	2021-08-11 21:37:35.70281+00	8
+15	Пётр	petrov@gma.ru	Втрой комментарий	2021-08-11 21:37:54.469349+00	8
+16	Серьгей	sana@mail.ru	Третий комментарий	2021-08-11 21:39:24.289029+00	8
+17	Джамбалайя	petrov@gma.ru	dgffdvgrre	2021-08-11 21:56:10.727278+00	13
 \.
 
 
@@ -1145,6 +1222,13 @@ COPY public.insurance_insurance_companies (id, name, image, customer_base, gener
 COPY public.insurance_request_for_a_call (id, name, phone_number, comment, services_id, data_time) FROM stdin;
 9	Иван	12345	привет	9	2021-07-22 23:19:49.511554+00
 11	dggfd	124455	много	10	2021-07-29 08:44:11.116783+00
+12	Имя не определил		не отпределил	13	2021-08-10 13:00:04.501416+00
+13	Имя не определил		не отпределил	13	2021-08-11 12:47:51.518065+00
+14	dfregf	13124	dfgreg	8	2021-08-11 12:48:18.959011+00
+15	jhewnfre	8789680	jewflef	9	2021-08-11 14:26:49.221154+00
+16	hghj	565465	iuhju	9	2021-08-11 14:28:37.272218+00
+17	dvgffd	453245	dgvref	9	2021-08-11 14:34:25.892271+00
+18	ewfef	13324	dgfdg	8	2021-08-11 14:37:47.641879+00
 \.
 
 
@@ -1188,14 +1272,14 @@ SELECT pg_catalog.setval('public.auth_group_id_seq', 1, true);
 -- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 15, true);
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 16, true);
 
 
 --
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 40, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 44, true);
 
 
 --
@@ -1223,21 +1307,28 @@ SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 68, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 81, true);
 
 
 --
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 10, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 11, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 28, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 30, true);
+
+
+--
+-- Name: insurance_commentservice_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.insurance_commentservice_id_seq', 17, true);
 
 
 --
@@ -1251,7 +1342,7 @@ SELECT pg_catalog.setval('public.insurance_insurance_companies_id_seq', 10, true
 -- Name: insurance_request_for_a_call_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.insurance_request_for_a_call_id_seq', 11, true);
+SELECT pg_catalog.setval('public.insurance_request_for_a_call_id_seq', 18, true);
 
 
 --
@@ -1405,6 +1496,14 @@ ALTER TABLE ONLY public.django_session
 
 
 --
+-- Name: insurance_commentservice insurance_commentservice_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.insurance_commentservice
+    ADD CONSTRAINT insurance_commentservice_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: insurance_insurance_companies insurance_insurance_companies_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
 --
 
@@ -1528,6 +1627,13 @@ CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session U
 
 
 --
+-- Name: insurance_commentservice_services_id_b4fdc3cd; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX insurance_commentservice_services_id_b4fdc3cd ON public.insurance_commentservice USING btree (services_id);
+
+
+--
 -- Name: insurance_insurance_companies_autor_id_8a0dd3f8; Type: INDEX; Schema: public; Owner: admin
 --
 
@@ -1625,6 +1731,14 @@ ALTER TABLE ONLY public.django_admin_log
 
 ALTER TABLE ONLY public.django_admin_log
     ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: insurance_commentservice insurance_commentser_services_id_b4fdc3cd_fk_insurance; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.insurance_commentservice
+    ADD CONSTRAINT insurance_commentser_services_id_b4fdc3cd_fk_insurance FOREIGN KEY (services_id) REFERENCES public.insurance_services(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --

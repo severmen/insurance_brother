@@ -10,6 +10,10 @@
 </head>
 <body>
     <header>
+        <a href="{% url 'main_insurance' %}">
+            <h3>Сервис застрахуй братуху</h3>
+        </a>
+
             {% if request.user.is_authenticated %}
             Пользоватаель    {{ request.user.first_name }}
             <br>
@@ -22,11 +26,13 @@
             <a href="{% url 'admin:index' %}">Войти </a>
               <br>
             <a href="{% url 'password_reset' %}">Забыли пароль </a>
-
         {% endif %}
     </header>
     {% block body %}
 
     {% endblock %}
+    <footer>
+        <h3 align="center">По организационным вопрсам обращайтесь по email:severmen18@gmail.com</h3>
+    </footer>
 </body>
 </html>

@@ -6,10 +6,13 @@ from elasticsearch import Elasticsearch
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordResetForm
 from django.contrib.auth.models import User, Group
-from django.forms import Textarea
 from django.template import loader
 
-from .models import Insurance_companies, Services, Request_for_a_call, Type_services
+from .models import (Insurance_companies,
+                     Services,
+                     Request_for_a_call,
+                     Type_services,
+                     CommentService,)
 from .services import MaintenanceServices
 
 
@@ -18,7 +21,7 @@ class RegisterForm(UserCreationForm):
     форма регистрации
     '''
     first_name = forms.CharField(label = "Имя",required=True, max_length=150)
-    last_name = forms.CharField(label = "Фамилийя",required=True, max_length=150)
+    last_name = forms.CharField(label = "Фамилия",required=True, max_length=150)
     email = forms.EmailField(required=True, max_length=150)
 
     class Meta:
@@ -56,7 +59,7 @@ class Request_for_a_call_Form(forms.Form):
     @property
     def errors(self):
         '''
-        Функция проверки коректности ввода запроса на зваонок
+        Функция проверки коректности ввода запроса на звонок
         '''
         """Return an ErrorDict for the data provided for the form."""
         self._errors = {}
@@ -257,5 +260,23 @@ class MyPasswordResetForm(PasswordResetForm):
         services = MaintenanceServices()
         services.password_recovery(subject = subject, body = body, email = to_email)
 
-class ElasticSearchForm(forms.Form):
-    name = forms.CharField(label = "",required=True, max_length=350)
+
+class CommentForm(forms.Form):
+    '''
+    Форма добавления комментариев к сервисам
+    '''
+    name = forms.CharField(label="Имя",required=True)
+    email = forms.EmailField(label="email",required=True)
+    comment = forms.CharField(label="Коментарий", required=True,
+                              widget=forms.Textarea(attrs={'rows': '7',
+                                                           'cols':'40'}))
+    def save(self, data, id_service):
+
+        CommentService.objects.create(services = Services.objects.get(id = int(id_service)),
+                                      name=data.get('name'),
+                                      email=data.get('email'),
+                                      comment=data.get('comment'),).save()
+
+    class Meta:
+        model = CommentService
+        fields = ('name', 'email','comment',)

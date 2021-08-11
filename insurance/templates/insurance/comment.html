@@ -1,0 +1,37 @@
+{% for one_comment in comment %}
+        <div style = "border-top-style: dashed;">
+            <p>
+                автор комментария:{{ one_comment.name }}
+            </p>
+            <p>
+                email:{{ one_comment.email }}
+            </p>
+
+            <p>
+                комментрий:{{ one_comment.comment }}
+            </p>
+            <p>
+                дата:{{ one_comment.date_of_creation }}
+            </p>
+        </div>
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; Первая</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+        {% endif %}
+
+        {% if page_obj.has_previous or page_obj.has_next %}
+            <span class="current">
+                Старица {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+            </span>
+        {% endif %}
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Последняя &raquo;</a>
+        {% endif %}
+    </span>
+    </div>

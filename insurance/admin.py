@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.db.models import QuerySet
 
-from .models import Services,Type_services, Insurance_companies, Request_for_a_call
+from .models import Services,Type_services, Insurance_companies, Request_for_a_call, CommentService
+from project.settings import collection_mongoDB_statistics_serivice
 admin.site.register(Type_services)
 
 
@@ -35,8 +36,8 @@ class RequestForACallAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         '''
-        Функция показывает запросы только к тьем сервисам,который пользователь
-        создал сам
+        Функция показывает запросы только к тем сервисам,который
+        пользователь создал сам
         '''
         qs = super().get_queryset(request)
         if request.user.is_superuser:
@@ -48,10 +49,28 @@ class RequestForACallAdmin(admin.ModelAdmin):
             if a.services.insurance_companies.autor == request.user:
                 queryset_one_user_service = queryset_one_user_service | qs.filter(id = a.id)
         return queryset_one_user_service
-
+    def get_queryset(self, request):
+        '''
+        функция огарничивает просмотр списка компаний
+        пользователь видит только те компании, которые создал сам
+        '''
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(autor=request.user)
 
 class ServicesAdmin(admin.ModelAdmin):
-    list_display = ('name', 'type_services',)
+    list_display = ('name', 'type_services','number_of_views',)
+    def number_of_views(self, obj):
+        '''
+        создём ещё одно поле для отопбражения
+        количестов просмотров
+        '''
+        request = collection_mongoDB_statistics_serivice.find_one({"id":obj.id})
+        return  (request.get('count') if request != None else 0)
+
+    number_of_views.short_description = 'Всего количество просмотров'
+
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         '''
@@ -78,6 +97,28 @@ class ServicesAdmin(admin.ModelAdmin):
         return queryset_one_user_service
 
 
+class CommentServiceAdmin(admin.ModelAdmin):
+    list_display = ('services','name','email','comment', 'date_of_creation')
+
+    def get_queryset(self, request):
+        '''
+            функция ограничивает прсотмотр комментарием
+            руководить компании могут лишь просматривать те комментарии, которые
+            оставили к их сервисам
+        '''
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+
+        result_request = qs.none()
+        for one_comment in qs.all():
+            if one_comment.services.insurance_companies.autor == request.user:
+                result_request = result_request | qs.filter(id=one_comment.id)
+
+        return result_request
+
+
 admin.site.register(Services, ServicesAdmin)
 admin.site.register(Request_for_a_call,RequestForACallAdmin)
 admin.site.register(Insurance_companies, InsuranceСompaniesAdmin)
+admin.site.register(CommentService,CommentServiceAdmin)

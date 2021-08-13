@@ -1,0 +1,8 @@
+{% extends 'insurance/base.html' %}
+{% block title %}Ошибка {% endblock %}
+{% block body %}
+    <h1 align="center">К сожалению были обнаружены следующие неполадки</h1>
+    {% for one_message in messages %}
+        <h3>•{{ one_message }}</h3>
+    {% endfor %}
+{% endblock %}

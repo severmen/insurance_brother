@@ -34,6 +34,11 @@ SECRET_KEY = 'django-insecure-()^efh(hhx@49g(^t^j#s1^&!xw1@c$^yx9$-o)tmu3em$mb&t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
+####################################
+#########  os.environ ##############
+####################################
+
 os.environ["URL_AT_THE_MOMENT"] = "http://localhost:8008"
 os.environ["RabbitMQ_HOST"] = "host.docker.internal"
 os.environ["RabbitMQ_USERNAME"] = "username"
@@ -44,6 +49,12 @@ os.environ["MongoDB_USERNAME"] = "root"
 os.environ["MongoDB_PASSWORD"] = "example"
 
 os.environ["Elasticsearch_HOST"] = "host.docker.internal"
+
+
+os.environ["Login_URL"] = "/admin/login/"
+os.environ["Login_time_out"] = '3'
+
+
 
 
 
@@ -121,7 +132,7 @@ DATABASES = {
 }
 
 ####################################
-##  MONGO_DB CONFIGURATION ##
+##  MONGO_DB CONFIGURATION ########
 ####################################
 import pymongo
 

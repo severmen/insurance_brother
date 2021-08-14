@@ -40,7 +40,7 @@
         -python worker_send_confirmation.py
         -python worker_send_new_request.py
         -python worker_password_recovery.py
-        
+
 
 
 Доступ к сайту
@@ -48,6 +48,3 @@ http://127.0.0.1:8008
 
 Запуск тестов(они ещё не все написаны, но некоторые есть)
 	python manage.py test
-
-TO-DU
--дописать тесты

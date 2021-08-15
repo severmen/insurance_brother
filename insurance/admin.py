@@ -3,7 +3,7 @@ from django.db.models import QuerySet
 
 from .models import Services,Type_services, Insurance_companies, Request_for_a_call, CommentService
 from project.settings import collection_mongoDB_statistics_serivice
-admin.site.register(Type_services)
+
 
 
 class InsuranceСompaniesAdmin(admin.ModelAdmin):
@@ -118,7 +118,41 @@ class CommentServiceAdmin(admin.ModelAdmin):
         return result_request
 
 
-admin.site.register(Services, ServicesAdmin)
-admin.site.register(Request_for_a_call,RequestForACallAdmin)
-admin.site.register(Insurance_companies, InsuranceСompaniesAdmin)
-admin.site.register(CommentService,CommentServiceAdmin)
+# admin.site.register(Services, ServicesAdmin)
+# admin.site.register(Request_for_a_call,RequestForACallAdmin)
+# admin.site.register(Insurance_companies, InsuranceСompaniesAdmin)
+# admin.site.register(CommentService,CommentServiceAdmin)
+# admin.site.register(Type_services)
+
+
+class PostAdminSite(admin.AdminSite):
+    site_header = "Сервис заструхуй братуху"
+    site_title = "Администрирование"
+    index_title = ""
+
+    # def get_app_list(self, request):
+    #     app_list = super().get_app_list(request)
+    #     app_list += [
+    #         {
+    #             "name": "My Custom App",
+    #             "app_label": "my_test_app",
+    #             # "app_url": "/admin/test_view",
+    #             "models": [
+    #                 {
+    #                     "name": "tcptraceroute",
+    #                     "object_name": "tcptraceroute",
+    #                     "admin_url": "/admin/test_view",
+    #                     "view_only": True,
+    #                 }
+    #             ],
+    #         }
+    #     ]
+    #     return app_list
+
+post_admin_site = PostAdminSite(name='post_admin')
+
+post_admin_site.register(Services, ServicesAdmin)
+post_admin_site.register(Request_for_a_call,RequestForACallAdmin)
+post_admin_site.register(Insurance_companies, InsuranceСompaniesAdmin)
+post_admin_site.register(CommentService,CommentServiceAdmin)
+post_admin_site.register(Type_services)

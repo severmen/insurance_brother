@@ -18,14 +18,14 @@ from django.urls import path,re_path, include
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-from insurance.admin import post_admin_site
+from insurance.admin import admin_site
 from project import settings
 
 
 
 #admin.site.urls
 urlpatterns = [
-    path('admin/', post_admin_site.urls, name = "admin"),
+    path('admin/', admin_site.urls, name = "admin"),
     path('', include('insurance.urls')),
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]

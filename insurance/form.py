@@ -199,50 +199,6 @@ class Search_Services(forms.Form):
             else:
                 return qs.order_by("insurance_cost")
 
-        ############################
-        ### потом уберу старый код #
-        ############################
-        '''
-        #экспертный рейтинг
-        def rating():
-            nonlocal self
-            nonlocal qs
-            try:
-                if self.data.get('rating') != 'Все' and self.data.get('rating') != None:
-                    all_companies = Insurance_companies.objects.filter(expert_rating = self.data.get('rating'))
-                    for id, one_filter_qs in enumerate(copy.copy(qs)):
-                        if id == 0:
-                            qs = qs.none()
-                        x = (True for x in all_companies if one_filter_qs.insurance_companies == x)
-                        if next(x,None) == True:
-                            qs = qs | Services.objects.filter(id = one_filter_qs.id)
-            except Exception as E:
-                pass
-
-        # клинеская база
-        def base():
-            nonlocal self
-            nonlocal qs
-            if self.data.get('customer_base') != None and  self.data.get('customer_base') != "":
-                number = int(self.data.get('customer_base'))
-                sorted_base = list((x for x in copy.copy(qs) if x.insurance_companies.customer_base > number))
-                for id, one_good_qs in enumerate(sorted_base):
-                    if id == 0:
-                        qs = qs.filter(id=-1)
-                    qs = qs | Services.objects.filter(id = one_good_qs.id)
-                if len(sorted_base) == 0:
-                    qs = qs.none()
-
-        #сортировка
-        def sortirovka():
-            nonlocal self
-            nonlocal qs
-            if self.data.get('price') == "по возрастанию":
-                return qs.order_by("insurance_cost")
-            else:
-                return qs.order_by("-insurance_cost")
-        
-        '''
         return Elasticsearch_seacrh()
 
 

@@ -10,3 +10,4 @@ services:
              - ./:/usr/src/app/
         ports:
             - "5433:5432"
+        mem_limit: 500m

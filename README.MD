@@ -15,7 +15,7 @@
 
 Сборка проекта
     Запуск Elasticsearch
-        -docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.13.4
+        -docker run -m 900M -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.13.4
     Сборка БД
         -docker-compose build
         -docker-compose up

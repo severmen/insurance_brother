@@ -39,16 +39,16 @@ DEBUG = True
 #########  os.environ ##############
 ####################################
 
-os.environ["URL_AT_THE_MOMENT"] = "http://localhost:8000"
-os.environ["RabbitMQ_HOST"] = "localhost"
+os.environ["URL_AT_THE_MOMENT"] = "http://localhost:8008"
+os.environ["RabbitMQ_HOST"] = "host.docker.internal"
 os.environ["RabbitMQ_USERNAME"] = "username"
 os.environ["RabbitMQ_PASSWORD"] = "password"
 
-os.environ["MongoDB_HOST"] = "localhost"
+os.environ["MongoDB_HOST"] = "host.docker.internal"
 os.environ["MongoDB_USERNAME"] = "root"
 os.environ["MongoDB_PASSWORD"] = "example"
 
-os.environ["Elasticsearch_HOST"] = "localhost"
+os.environ["Elasticsearch_HOST"] = "host.docker.internal"
 
 os.environ["Login_URL"] = "/admin/login/"
 os.environ["Login_time_out"] = '3'

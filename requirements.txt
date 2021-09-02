@@ -8,3 +8,5 @@ djangorestframework==3.12.4
 django-elasticsearch-dsl-drf==0.22.1
 beautifulsoup4==4.9.3
 requests==2.26.0
+pymongo
+schedule
